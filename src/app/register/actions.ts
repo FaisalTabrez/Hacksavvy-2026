@@ -56,18 +56,18 @@ export async function registerTeam(formData: FormData) {
       from: process.env.GMAIL_USER,
       to: email,
       subject: 'Application Received - Hacksavvy 2026',
-      html: \`
+      html: `
         <div style="font-family: sans-serif; color: #333;">
           <h1>Application Received!</h1>
-          <p>Hi \${fullName},</p>
+          <p>Hi ${fullName},</p>
           <p>Thanks for registering for Hacksavvy 2026. We've received your application.</p>
-          <p><strong>Team:</strong> \${teamName || 'N/A'}</p>
-          <p><strong>Track:</strong> \${track}</p>
+          <p><strong>Team:</strong> ${teamName || 'N/A'}</p>
+          <p><strong>Track:</strong> ${track}</p>
           <br/>
           <p>See you there!</p>
           <p>The Hacksavvy Team</p>
         </div>
-      \`,
+      `,
     })
 
     return { success: true }
