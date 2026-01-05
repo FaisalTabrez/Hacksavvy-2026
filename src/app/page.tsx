@@ -2,6 +2,9 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import dynamic from 'next/dynamic'
+
+const FluidBackground = dynamic(() => import('@/components/FluidBackground'), { ssr: false })
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -49,6 +52,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4 min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden">
+        <FluidBackground />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-black to-black -z-10" />
         <motion.div
           initial="initial"

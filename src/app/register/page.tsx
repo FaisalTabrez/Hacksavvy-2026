@@ -1,6 +1,6 @@
 'use client'
 
-import { useUser } from '@clerk/nextjs'
+import { useUser, SignInButton } from '@clerk/nextjs'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { registerTeam } from '@/app/register/actions'
@@ -20,12 +20,11 @@ export default function RegisterPage() {
       <div className="min-h-screen flex flex-col items-center justify-center p-4 text-center">
         <h1 className="text-2xl font-bold mb-4">Sign in Required</h1>
         <p className="mb-6 text-gray-400">Please sign in to register for Hacksavvy 2026.</p>
-        {/* Clerk handles the redirect automatically if we use their components or middleware, 
-            but here we can just show a message or redirect manually if needed. 
-            The middleware should have redirected them already if this page is protected, 
-            but since we are using client component, we might need to handle it or rely on middleware.
-            For now, let's assume middleware protects this route or we can use <RedirectToSignIn /> 
-        */}
+        <SignInButton mode="modal">
+          <button className="px-8 py-3 bg-white text-black rounded-full font-medium hover:bg-gray-200 transition-colors">
+            Sign In
+          </button>
+        </SignInButton>
       </div>
     )
   }
@@ -42,7 +41,8 @@ export default function RegisterPage() {
         setError(result.error || 'Something went wrong')
       }
     } catch (e) {
-      setError('An unexpected error occurred')
+      console.error('Submission error:', e)
+      setError('An unexpected error occurred: ' + (e instanceof Error ? e.message : String(e)))
     } finally {
       setIsSubmitting(false)
     }
