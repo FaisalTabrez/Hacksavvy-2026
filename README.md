@@ -1,87 +1,36 @@
-[![Version](https://img.shields.io/npm/v/@whatisjery/react-fluid-distortion?style=flat&colorA=000000&colorB=000000)](https://www.npmjs.com/package/@whatisjery/react-fluid-distortion)
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-# Fluid Distortion for React Three Fiber
+## Getting Started
 
-![screen capture](./src/assets/screen_capture.png)
-
-Implementing post-processing fluid distortion effects in response to cursor interactions for React-Three-Fiber.
-Based on the shaders developed by [Pavel Dobryakov](https://github.com/PavelDoGreat/WebGL-Fluid-Simulation)
-
----
-
-From the [react-three-fiber](https://github.com/pmndrs/react-three-fiber) documentation :
-
-> [!WARNING]  
-> Three-fiber is a React renderer, it must pair with a major version of React, just like react-dom, react-native, etc. @react-three/fiber@8 pairs with react@18, @react-three/fiber@9 pairs with react@19.
-
----
-
-## Try it :
-
-[codesandbox](https://codesandbox.io/p/sandbox/github/whatisjery/react-fluid-distortion)
-
-## Installation :
+First, run the development server:
 
 ```bash
-npm install @whatisjery/react-fluid-distortion @react-three/drei @react-three/postprocessing postprocessing
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Example of use :
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```jsx
-import { Fluid } from '@whatisjery/react-fluid-distortion';
-import { EffectComposer } from '@react-three/postprocessing';
-import { Canvas } from '@react-three/fiber';
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-<Canvas
-    style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        height: '100vh',
-        width: '100vw',
-        background: '#000000',
-    }}>
-    <EffectComposer>
-        {... other effets}
-        <Fluid />
-    </EffectComposer>
-</Canvas>;
-```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Options :
+## Learn More
 
-| Name                   | Type        | Default Value | Description                                                                                    |
-| ---------------------- | ----------- | ------------- | ---------------------------------------------------------------------------------------------- |
-| `fluidColor`           | hexadecimal | `#005eff`     | Sets the fluid color. Effective only when `rainbow` is set to `false`.                         |
-| `backgroundColor`      | string      | `#070410`     | Sets the background color. Effective only when `showBackground` is `true`.                     |
-| `showBackground`       | boolean     | `false`       | Toggles the background color's visibility. If `false` it becomes transprent.                   |
-| `blend`                | number      | `5`           | Blends fluid into the scene when `showBackground` is true. Valid range: `0.00` to `10.0`.      |
-| `intensity`            | number      | `10`          | Sets the fluid intensity. Valid range: `0` to `10`.                                            |
-| `force`                | number      | `2`           | Multiplies the mouse velocity to increase fluid splatter. Valid range: `0.0` to `20`.          |
-| `distortion`           | number      | `2`           | Sets the distortion amount. Valid range: `0.00` to `2.00`.                                     |
-| `radius`               | number      | `0.3`         | Sets the fluid radius. Valid range: `0.01` to `1.00`.                                          |
-| `curl`                 | number      | `10`          | Sets the amount of the curl effect. Valid range: `0.0` to `50`.                                |
-| `swirl`                | number      | `20`          | Sets the amount of the swirling effect. Valid range: `0` to `20`.                              |
-| `velocityDissipation`  | number      | `0.99`        | Reduces the fluid velocity over time. Valid range: `0.00` to `1.00`.                           |
-| `densitionDissipation` | number      | `0.95`        | Reduces the fluid density over time. Valid range: `0.00` to `1.00`.                            |
-| `pressure`             | number      | `0.80`        | Controls the reduction of pressure. Valid range: `0.00` to `1.00`.                             |
-| `rainbow`              | boolean     | `true`        | Activates color mode based on mouse direction. No range applicable as this is a boolean value. |
+To learn more about Next.js, take a look at the following resources:
 
-## Usage with nextjs
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-If you're working with an older version of Next.js, you may get this type of error:
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-```javascript
-TypeError: Cannot read properties of undefined (reading '__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED')
-```
+## Deploy on Vercel
 
-To fix it, you can enable package transpilation in your next.config file. Here’s how:
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-```javascript
-const nextConfig = {
-    transpilePackages: ['@whatisjery/react-fluid-distortion'],
-};
-
-module.exports = nextConfig;
-```
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
