@@ -3,6 +3,7 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Fluid } from '@whatisjery/react-fluid-distortion'
 import { EffectComposer } from '@react-three/postprocessing'
+import { Environment } from '@react-three/drei'
 import { useEffect, useState } from 'react'
 
 function AutoFluidController() {
@@ -42,15 +43,15 @@ export default function FluidBackground() {
   return (
     <div className={`fixed inset-0 z-0 ${isMobile ? 'pointer-events-none' : ''}`}>
       <Canvas style={{ background: '#000000' }}>
+        <Environment preset="warehouse" background />
         <AutoFluidController />
         <EffectComposer>
           <Fluid 
             rainbow={true}
             intensity={0.4}
             distortion={0.5}
-            backgroundColor="#000000"
             blend={5}
-            showBackground={true}
+            showBackground={false}
           />
         </EffectComposer>
       </Canvas>
