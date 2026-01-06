@@ -22,7 +22,9 @@ const staggerContainer = {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black text-white font-sans selection:bg-purple-500/30">
+    <main className="min-h-screen text-white font-sans selection:bg-purple-500/30">
+      <FluidBackground />
+      
       {/* Navbar */}
       <motion.nav 
         initial={{ y: -100 }}
@@ -51,9 +53,8 @@ export default function Home() {
       </motion.nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 min-h-screen flex flex-col items-center justify-center text-center relative overflow-hidden">
-        <FluidBackground />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-black to-black -z-10" />
+      <section className="pt-32 pb-20 px-4 min-h-screen flex flex-col items-center justify-center text-center relative z-10">
+        
         <motion.div
           initial="initial"
           animate="animate"
@@ -86,7 +87,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-4 border-t border-white/5">
+      <section id="about" className="py-20 px-4 border-t border-white/5 relative z-10 bg-black/80 backdrop-blur-sm">
         <div className="container mx-auto max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -107,9 +108,9 @@ export default function Home() {
       </section>
 
       {/* Tracks Section */}
-      <section id="tracks" className="py-20 px-4 border-t border-white/5 bg-white/[0.02]">
+      <section id="tracks" className="py-20 px-4 border-t border-white/5 relative z-10 bg-black/80 backdrop-blur-sm">
         <div className="container mx-auto">
-          <motion.h2 
+          <motion.h2  
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -136,7 +137,7 @@ export default function Home() {
       </section>
 
       {/* Prizes Section */}
-      <section id="prizes" className="py-20 px-4 border-t border-white/5">
+      <section id="prizes" className="py-20 px-4 border-t border-white/5 relative z-10 bg-black/80 backdrop-blur-sm">
         <div className="container mx-auto">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -180,7 +181,7 @@ export default function Home() {
       </section>
 
       {/* Sponsors Section */}
-      <section id="sponsors" className="py-20 px-4 border-t border-white/5 bg-white/[0.02]">
+      <section id="sponsors" className="py-20 px-4 border-t border-white/5 relative z-10 bg-black/80 backdrop-blur-sm">
         <div className="container mx-auto text-center">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -209,7 +210,7 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-20 px-4 border-t border-white/5">
+      <section id="faq" className="py-20 px-4 border-t border-white/5 relative z-10 bg-black/80 backdrop-blur-sm">
         <div className="container mx-auto max-w-3xl">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -238,7 +239,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 border-t border-white/10 bg-black text-center text-gray-500 text-sm">
+      <footer className="py-8 px-4 border-t border-white/10 bg-black text-center text-gray-500 text-sm relative z-10">
         <p>© 2026 Hacksavvy. All rights reserved.</p>
         <div className="flex justify-center gap-4 mt-4">
           <Link href="/coc" className="hover:text-white">Code of Conduct</Link>

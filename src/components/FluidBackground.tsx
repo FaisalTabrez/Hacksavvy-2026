@@ -2,12 +2,22 @@
 
 import { Canvas } from '@react-three/fiber'
 import { Fluid } from '@whatisjery/react-fluid-distortion'
+import { EffectComposer } from '@react-three/postprocessing'
 
 export default function FluidBackground() {
   return (
-    <div className="absolute inset-0 -z-10 opacity-50">
-      <Canvas style={{ width: '100%', height: '100%' }}>
-        <Fluid />
+    <div className="fixed inset-0 z-0 pointer-events-none">
+      <Canvas style={{ background: '#000000' }}>
+        <EffectComposer>
+          <Fluid 
+            rainbow={true}
+            intensity={0.4}
+            distortion={0.5}
+            backgroundColor="#000000"
+            blend={5}
+            showBackground={true}
+          />
+        </EffectComposer>
       </Canvas>
     </div>
   )
