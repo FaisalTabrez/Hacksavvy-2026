@@ -131,6 +131,32 @@ export default function RegisterPage() {
               </select>
             </div>
 
+            <div className="pt-6 border-t border-white/10">
+              <h3 className="text-xl font-bold mb-4 text-purple-400">Payment Verification</h3>
+              
+              <div className="mb-6 flex flex-col items-center">
+                <div className="w-[200px] h-[200px] bg-slate-200 border-2 border-dashed border-gray-400 rounded-lg flex items-center justify-center mb-4">
+                  <span className="text-gray-500 font-medium">Payment QR Code</span>
+                </div>
+                <p className="text-sm text-gray-400 text-center">
+                  Scan the QR code to pay, then upload the screenshot proof below.
+                </p>
+              </div>
+
+              <div>
+                <label htmlFor="screenshot" className="block text-sm font-medium mb-2 text-gray-300">
+                  Upload Payment Screenshot
+                </label>
+                <input
+                  type="file"
+                  id="screenshot"
+                  name="screenshot"
+                  accept="image/png, image/jpeg"
+                  className="w-full px-4 py-3 rounded-lg bg-black/50 border border-white/10 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 outline-none transition-all file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-500/10 file:text-purple-400 hover:file:bg-purple-500/20"
+                />
+              </div>
+            </div>
+
             {error && (
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
                 {error}

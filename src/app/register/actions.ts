@@ -20,9 +20,33 @@ export async function registerTeam(formData: FormData) {
     const githubUrl = formData.get('githubUrl') as string
     const bio = formData.get('bio') as string
     const track = formData.get('track') as string
+    const screenshot = formData.get('screenshot') as File
 
     if (!fullName || !email || !githubUrl) {
       return { success: false, error: 'Missing required fields' }
+    }
+
+    let screenshotUrl = null
+
+    // 0. Upload Screenshot to Supabase Storage if provided
+    if (screenshot && screenshot.size > 0) {
+      const fileExt = screenshot.name.split('.').pop()
+      const fileName = `${userId}-${Math.random()}.${fileExt}`
+      const filePath = `proofs/${fileName}`
+
+      const { error: uploadError } = await supabase.storage
+        .from('payment_proofs')
+        .upload(filePath, screenshot)
+
+      if (uploadError) {
+        console.error('Upload Error:', uploadError)
+        // We continue anyway, but you might want to stop here strict
+      } else {
+        const { data: { publicUrl } } = supabase.storage
+          .from('payment_proofs')
+          .getPublicUrl(filePath)
+        screenshotUrl = publicUrl
+      }
     }
 
     // 1. Save to Supabase
@@ -36,6 +60,8 @@ export async function registerTeam(formData: FormData) {
         github_url: githubUrl,
         bio: bio,
         track: track,
+        payment_status: 'pending',
+        screenshot_url: screenshotUrl
       })
 
     if (dbError) {
