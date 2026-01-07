@@ -3,7 +3,7 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Fluid } from '@whatisjery/react-fluid-distortion'
 import { EffectComposer } from '@react-three/postprocessing'
-import { Environment, MeshTransmissionMaterial, Torus } from '@react-three/drei'
+import { Environment, Torus } from '@react-three/drei'
 import { useEffect, useRef, useState } from 'react'
 
 function RotatingTorus() {
@@ -70,12 +70,11 @@ export default function FluidBackground() {
         <Environment preset="city" />
         <RotatingTorus />
         <AutoFluidController />
-        <EffectComposer>
+        <EffectComposer disableNormalPass multisampling={0}>
           <Fluid 
             rainbow={true}
             intensity={0.4}
             distortion={0.2}
-            blend={5}
             showBackground={false}
           />
         </EffectComposer>
