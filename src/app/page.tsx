@@ -35,7 +35,7 @@ const SectionTitle = ({ children, id }: { children: React.ReactNode, id?: string
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#00f0ff]/30 pb-32 overflow-hidden">
+    <main className="min-h-screen text-white selection:bg-[#00f0ff]/30 pb-32 overflow-hidden">
       
       <FloatingNav />
       <FluidBackground />
