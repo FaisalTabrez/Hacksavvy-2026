@@ -1,252 +1,137 @@
 'use client'
 
-import Link from 'next/link'
-import { motion } from 'framer-motion'
 import dynamic from 'next/dynamic'
+import { motion } from 'framer-motion'
+// Components
+import FloatingNav from '@/components/landing/FloatingNav'
+import TracksGrid from '@/components/landing/TracksGrid'
+import PrizesBento from '@/components/landing/PrizesBento'
+import Timeline from '@/components/landing/Timeline'
+import SponsorsMarquee from '@/components/landing/SponsorsMarquee'
+import FaqAccordion from '@/components/landing/FaqAccordion'
+import Link from 'next/link'
 
-const FluidBackground = dynamic(() => import('@/components/FluidBackground'), { ssr: false })
+// Dynamic import for Heavy 3D component with explicit loading state to prevent hydration mismatch
+const FluidBackground = dynamic(() => import('@/components/FluidBackground'), { 
+  ssr: false,
+  loading: () => <div className="fixed inset-0 bg-[#0a0a0a] z-0" /> 
+})
 
-const fadeIn = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5 }
-}
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-}
+const SectionTitle = ({ children, id }: { children: React.ReactNode, id?: string }) => (
+  <motion.h2 
+    id={id}
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    className="text-4xl md:text-6xl font-black font-heading text-center mb-16 pt-20"
+  >
+    <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-[#00f0ff] to-[#7c3aed]">
+      {children}
+    </span>
+  </motion.h2>
+)
 
 export default function Home() {
   return (
-    <main className="min-h-screen text-white font-sans selection:bg-purple-500/30">
-      <FluidBackground />
+    <main className="min-h-screen bg-[#0a0a0a] text-white selection:bg-[#00f0ff]/30 pb-32 overflow-hidden">
       
-      {/* Navbar */}
-      <motion.nav 
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="fixed top-0 w-full z-50 border-b border-white/10 bg-black/50 backdrop-blur-md"
-      >
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-            Hacksavvy 2026
-          </div>
-          <div className="hidden md:flex gap-6 text-sm text-gray-300">
-            <Link href="#about" className="hover:text-white transition-colors">About</Link>
-            <Link href="#tracks" className="hover:text-white transition-colors">Tracks</Link>
-            <Link href="#prizes" className="hover:text-white transition-colors">Prizes</Link>
-            <Link href="#sponsors" className="hover:text-white transition-colors">Sponsors</Link>
-            <Link href="#faq" className="hover:text-white transition-colors">FAQ</Link>
-          </div>
-          <Link 
-            href="/register"
-            className="px-4 py-2 bg-white text-black text-sm font-medium rounded-full hover:bg-gray-200 transition-colors"
-          >
-            Register Now
-          </Link>
-        </div>
-      </motion.nav>
+      <FloatingNav />
+      <FluidBackground />
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 min-h-screen flex flex-col items-center justify-center text-center relative z-10">
-        
-        <motion.div
-          initial="initial"
-          animate="animate"
-          variants={staggerContainer}
-          className="max-w-4xl mx-auto"
-        >
-          <motion.h1 variants={fadeIn} className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-            Build the <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Future</span>
-          </motion.h1>
-          <motion.p variants={fadeIn} className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-            Join us for 24 hours of innovation, coding, and breakthrough ideas.
-            <br />
-            February 12-13, 2026
-          </motion.p>
-          <motion.div variants={fadeIn} className="flex gap-4 justify-center">
-            <Link 
-              href="/register"
-              className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full font-medium hover:opacity-90 transition-opacity"
-            >
-              Register for Hacksavvy
-            </Link>
-            <Link 
-              href="#about"
-              className="px-8 py-3 border border-white/20 rounded-full font-medium hover:bg-white/5 transition-colors"
-            >
-              Learn More
-            </Link>
+      <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
+        {/* Overlay Content */}
+        <div className="relative z-10 text-center mix-blend-overlay px-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1 }}
+          >
+            <span className="inline-block px-4 py-1 mb-6 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-mono text-[#00f0ff]">
+              ⚡ 400+ Hackers Registered
+            </span>
+            <h1 className="text-6xl md:text-9xl font-black font-heading tracking-tighter text-white mb-6">
+              HACKSAVVY
+              <br />
+              <span className="text-transparent bg-stroke text-white/90">2026</span>
+            </h1>
+            <p className="text-xl md:text-2xl font-light text-gray-300 max-w-2xl mx-auto">
+              Enter the <span className="text-[#00f0ff] font-bold">Liquid Void</span>. 
+              Build the future on February 12-13.
+            </p>
           </motion.div>
+        </div>
+        
+        {/* Scroll Indicator */}
+        <motion.div 
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 text-gray-500"
+        >
+          <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-[#00f0ff] to-transparent" />
         </motion.div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-4 border-t border-white/5 relative z-10 bg-black/80 backdrop-blur-sm">
-        <div className="container mx-auto max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-3xl font-bold mb-8 text-center">About The Event</h2>
-            <div className="p-8 rounded-2xl bg-white/5 border border-white/10">
-              <p className="text-gray-300 leading-relaxed">
-                Hacksavvy 2026 is the premier hackathon for builders, dreamers, and innovators. 
-                Whether you&apos;re a seasoned developer or just starting out, this is your platform 
-                to create something extraordinary.
-              </p>
-            </div>
-          </motion.div>
+      <section id="about" className="container mx-auto px-4 py-20 relative z-10">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <SectionTitle>THE VOID AWAITS</SectionTitle>
+          <p className="text-lg md:text-xl text-gray-300 leading-relaxed font-light">
+            Hacksavvy 2026 is not just a hackathon; it&apos;s a descent into pure innovation. 
+            We provide the infrastructure; you bring the code. 
+            Join 500+ developers, designers, and visionaries for 24 hours of 
+            uninterrupted creation in a high-performance environment.
+          </p>
         </div>
       </section>
 
       {/* Tracks Section */}
-      <section id="tracks" className="py-20 px-4 border-t border-white/5 relative z-10 bg-black/80 backdrop-blur-sm">
-        <div className="container mx-auto">
-          <motion.h2  
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl font-bold mb-12 text-center"
-          >
-            Tracks
-          </motion.h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2 }}
-                className="p-6 rounded-xl bg-black border border-white/10 hover:border-purple-500/50 transition-colors"
-              >
-                <h3 className="text-xl font-bold mb-2">Track {i}</h3>
-                <p className="text-gray-400 text-sm">Description for track {i} goes here.</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+      <section id="tracks" className="container mx-auto px-4 relative z-10">
+        <SectionTitle>THE HOLO-DECK</SectionTitle>
+        <TracksGrid />
       </section>
 
       {/* Prizes Section */}
-      <section id="prizes" className="py-20 px-4 border-t border-white/5 relative z-10 bg-black/80 backdrop-blur-sm">
-        <div className="container mx-auto">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl font-bold mb-12 text-center"
-          >
-            Prizes
-          </motion.h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* Placeholders */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="h-64 rounded-xl bg-gradient-to-b from-yellow-500/10 to-transparent border border-yellow-500/20 flex items-center justify-center"
-            >
-              <span className="text-2xl font-bold text-yellow-500">1st Place</span>
-            </motion.div>
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="h-64 rounded-xl bg-gradient-to-b from-gray-400/10 to-transparent border border-gray-400/20 flex items-center justify-center"
-            >
-              <span className="text-2xl font-bold text-gray-400">2nd Place</span>
-            </motion.div>
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6 }}
-              className="h-64 rounded-xl bg-gradient-to-b from-orange-700/10 to-transparent border border-orange-700/20 flex items-center justify-center"
-            >
-              <span className="text-2xl font-bold text-orange-700">3rd Place</span>
-            </motion.div>
-          </div>
-        </div>
+      <section id="prizes" className="container mx-auto px-4 relative z-10">
+        <SectionTitle>TROPHY CASE</SectionTitle>
+        <PrizesBento />
+      </section>
+
+      {/* Timeline Section */}
+      <section className="container mx-auto px-4 relative z-10">
+        <SectionTitle>JOURNEY</SectionTitle>
+        <Timeline />
       </section>
 
       {/* Sponsors Section */}
-      <section id="sponsors" className="py-20 px-4 border-t border-white/5 relative z-10 bg-black/80 backdrop-blur-sm">
-        <div className="container mx-auto text-center">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl font-bold mb-12"
-          >
-            Our Sponsors
-          </motion.h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 opacity-50">
-            {/* Logo Placeholders */}
-            {[1, 2, 3, 4].map((i) => (
-              <motion.div 
-                key={i} 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2 }}
-                className="h-20 bg-white/10 rounded-lg flex items-center justify-center"
-              >
-                Logo {i}
-              </motion.div>
-            ))}
-          </div>
-        </div>
+      <section id="sponsors" className="relative z-10">
+         <SectionTitle>ALLIES</SectionTitle>
+         <SponsorsMarquee />
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-20 px-4 border-t border-white/5 relative z-10 bg-black/80 backdrop-blur-sm">
-        <div className="container mx-auto max-w-3xl">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl font-bold mb-12 text-center"
-          >
-            FAQ
-          </motion.h2>
-          <div className="space-y-4">
-            {[1, 2, 3].map((i) => (
-              <motion.div 
-                key={i} 
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.2 }}
-                className="p-4 rounded-lg bg-white/5 border border-white/10"
-              >
-                <h3 className="font-medium mb-2">Question {i}?</h3>
-                <p className="text-sm text-gray-400">Answer to question {i}.</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+      <section id="faq" className="container mx-auto px-4 py-20 relative z-10">
+        <SectionTitle>PROTOCOL</SectionTitle>
+        <FaqAccordion />
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 border-t border-white/10 bg-black text-center text-gray-500 text-sm relative z-10">
-        <p>© 2026 Hacksavvy. All rights reserved.</p>
-        <div className="flex justify-center gap-4 mt-4">
-          <Link href="/coc" className="hover:text-white">Code of Conduct</Link>
-          <a href="#" className="hover:text-white">Twitter</a>
-          <a href="#" className="hover:text-white">Instagram</a>
+      <footer className="relative z-10 border-t border-white/10 bg-black/50 backdrop-blur-xl mt-20">
+        <div className="container mx-auto px-4 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="text-2xl font-bold font-heading">
+            HACKSAVVY <span className="text-[#00f0ff]">2026</span>
+          </div>
+          <div className="flex gap-8 text-sm text-gray-500 font-mono">
+            <Link href="/coc" className="hover:text-[#00f0ff] transition-colors">CODE OF CONDUCT</Link>
+            <a href="#" className="hover:text-[#00f0ff] transition-colors">TERMS</a>
+            <a href="#" className="hover:text-[#00f0ff] transition-colors">PRIVACY</a>
+          </div>
+          <div className="text-gray-600 text-sm">
+            © 2026 Hacksavvy Inc.
+          </div>
         </div>
       </footer>
+
     </main>
   )
 }

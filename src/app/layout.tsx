@@ -1,21 +1,26 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono, Geist, Geist_Mono } from "next/font/google"; // Try consistent imports
 import { ClerkProvider } from '@clerk/nextjs'
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-heading",
+});
+
+const geistSans = Geist({
+  variable: "--font-sans",
+  subsets: ["latin"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
   title: "Hacksavvy 2026",
-  description: "Build the Future",
+  description: "Liquid Void Hackathon",
 };
 
 export default function RootLayout({
@@ -25,9 +30,9 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className="dark" suppressHydrationWarning>
+      <html lang="en" className="dark bg-[#0a0a0a]" suppressHydrationWarning>
         <body
-          className={`${inter.variable} ${spaceGrotesk.variable} antialiased bg-black text-white`}
+          className={`${geistSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased text-[#00f0ff] overflow-x-hidden selection:bg-[#00f0ff]/30`}
         >
           {children}
         </body>

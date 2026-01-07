@@ -74,7 +74,7 @@ export default function FluidBackground() {
           <Fluid 
             rainbow={true}
             intensity={0.4}
-            distortion={0.1}
+            distortion={0.2}
             showBackground={false}
           />
         </EffectComposer>
