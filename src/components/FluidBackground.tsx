@@ -48,7 +48,7 @@ export default function FluidBackground() {
           <Fluid 
             rainbow={true}
             intensity={0.4}
-            distortion={0.5}
+            distortion={0.2}
             blend={5}
             showBackground={false}
           />
