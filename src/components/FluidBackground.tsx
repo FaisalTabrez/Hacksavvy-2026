@@ -1,84 +1,77 @@
 'use client'
 
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Fluid } from '@whatisjery/react-fluid-distortion'
-import { EffectComposer } from '@react-three/postprocessing'
-import { Environment, MeshTransmissionMaterial } from '@react-three/drei'
-import { useEffect, useRef, useState } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { Stars, Sparkles } from '@react-three/drei'
+import { useRef } from 'react'
+import * as THREE from 'three'
 
-function RotatingTorus() {
-  const ref = useRef<any>(null)
-  
-  useFrame(() => {
-    if (ref.current) {
-      ref.current.rotation.x += 0.005
-      ref.current.rotation.y += 0.01
+function StarfieldScene() {
+  const groupRef = useRef<THREE.Group>(null)
+
+  useFrame((state, delta) => {
+    // 1. Rotate the entire group slowly
+    if (groupRef.current) {
+      groupRef.current.rotation.y -= delta * 0.05
+      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.1) * 0.05
     }
+
+    // 2. Subtle "floating" movement to the camera
+    const time = state.clock.elapsedTime
+    state.camera.position.x = Math.sin(time * 0.2) * 0.2
+    state.camera.position.y = Math.cos(time * 0.15) * 0.2
+    state.camera.lookAt(0, 0, 0)
   })
 
   return (
-    <mesh position-z={-4} ref={ref}>
-      <torusGeometry args={[2.8, 0.8, 100, 100]} />
-      <MeshTransmissionMaterial 
-        transmission={1}
-        samples={1}
-        anisotropy={0}
-        chromaticAberration={0}
+    <group ref={groupRef}>
+      {/* Stars: Radius 300, Depth 50, Count 5000, Factor 4, Saturation 0, Fade */}
+      <Stars 
+        radius={300} 
+        depth={50} 
+        count={5000} 
+        factor={4} 
+        saturation={0} 
+        fade 
       />
-    </mesh>
+
+      {/* Sparkles (Cyan Mix): Count 50 */}
+      <Sparkles 
+        color="#00f0ff"
+        count={50}
+        scale={10}
+        size={4}
+        speed={0.4}
+        opacity={1}
+      />
+
+      {/* Sparkles (Purple Mix): Count 50 */}
+      <Sparkles 
+        color="#7c3aed"
+        count={50}
+        scale={10}
+        size={4}
+        speed={0.4}
+        opacity={1}
+      />
+    </group>
   )
 }
 
-function AutoFluidController() {
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  useFrame((state) => {
-    if (isMobile) {
-      // Simulate pointer movement in a figure-8 pattern
-      const t = state.clock.getElapsedTime() * 0.5
-      state.pointer.x = Math.sin(t) * 0.5
-      state.pointer.y = Math.cos(t * 0.8) * 0.5
-    }
-  })
-
-  return null
-}
-
 export default function FluidBackground() {
-  const [isMobile, setIsMobile] = useState(true) // Default to true (safe for mobile scroll)
-
-  useEffect(() => {
-    // Check detection on mount to switch to desktop mode if applicable
-    const handleResize = () => setIsMobile(window.innerWidth < 768)
-    handleResize()
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
   return (
-    <div className={`fixed inset-0 z-0 ${isMobile ? 'pointer-events-none' : ''}`}>
-      <Canvas style={{ background: '#000000' }}>
-        <ambientLight intensity={10.1} />
-        <directionalLight position={[2, 20, 10]} />
-        <Environment preset="warehouse" />
-        <RotatingTorus />
-        <AutoFluidController />
-        <EffectComposer>
-          <Fluid 
-            rainbow={true}
-            intensity={0.4}
-            distortion={0.2}
-            showBackground={false}
-          />
-        </EffectComposer>
+    <div className="fixed top-0 left-0 w-full h-full -z-10 bg-[#0a0a0a]">
+      <Canvas
+        camera={{ position: [0, 0, 1], fov: 75 }}
+        dpr={[1, 2]}
+        gl={{ 
+          antialias: false, 
+          powerPreference: "high-performance",
+          alpha: false 
+        }}
+      >
+        <StarfieldScene />
       </Canvas>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a]/50 pointer-events-none" />
     </div>
   )
 }
