@@ -99,7 +99,7 @@ export default function Home() {
             <div className="p-8 rounded-2xl bg-white/5 border border-white/10">
               <p className="text-gray-300 leading-relaxed">
                 Hacksavvy 2026 is the premier hackathon for builders, dreamers, and innovators. 
-                Whether you're a seasoned developer or just starting out, this is your platform 
+                Whether you&apos;re a seasoned developer or just starting out, this is your platform 
                 to create something extraordinary.
               </p>
             </div>

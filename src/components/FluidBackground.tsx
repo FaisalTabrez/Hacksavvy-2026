@@ -7,7 +7,6 @@ import { Environment } from '@react-three/drei'
 import { useEffect, useState } from 'react'
 
 function AutoFluidController() {
-  const { pointer, toggle } = useThree()
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -34,8 +33,8 @@ export default function FluidBackground() {
 
   useEffect(() => {
     // Check detection on mount to switch to desktop mode if applicable
-    setIsMobile(window.innerWidth < 768)
     const handleResize = () => setIsMobile(window.innerWidth < 768)
+    handleResize()
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])

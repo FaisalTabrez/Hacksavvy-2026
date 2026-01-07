@@ -8,7 +8,7 @@ export default function SuccessPage() {
           Registration Complete!
         </h1>
         <p className="text-xl text-gray-300 mb-8">
-          You're all set for Hacksavvy 2026. Check your email for confirmation details.
+          You&apos;re all set for Hacksavvy 2026. Check your email for confirmation details.
         </p>
         <Link 
           href="/"

@@ -27,7 +27,7 @@ export default async function AdminPage() {
       <div className="p-8 text-red-500 bg-red-900/10 border border-red-500/20 rounded-lg">
         <h2 className="text-xl font-bold mb-2">Configuration Error</h2>
         <p>The <code>SUPABASE_SERVICE_ROLE_KEY</code> is missing from your <code>.env.local</code> file.</p>
-        <p className="mt-2 text-sm text-gray-400">Please go to your Supabase Dashboard {'>'} Project Settings {'>'} API, copy the "service_role" secret, and add it to your environment variables.</p>
+        <p className="mt-2 text-sm text-gray-400">Please go to your Supabase Dashboard {'>'} Project Settings {'>'} API, copy the &quot;service_role&quot; secret, and add it to your environment variables.</p>
       </div>
     )
   }
