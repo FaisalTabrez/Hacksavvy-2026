@@ -11,6 +11,7 @@ import SponsorsMarquee from '@/components/landing/SponsorsMarquee'
 import FaqAccordion from '@/components/landing/FaqAccordion'
 import Link from 'next/link'
 import About from '@/components/sections/About'
+import Guidelines from '@/components/sections/Guidelines'
 
 // Dynamic import for Heavy 3D component with explicit loading state to prevent hydration mismatch
 const FluidBackground = dynamic(() => import('@/components/FluidBackground'), { 
@@ -94,9 +95,12 @@ export default function Home() {
         <Timeline />
       </section>
 
+      {/* Guidelines Section */}
+      <Guidelines />
+
       {/* Sponsors Section */}
       <section id="sponsors" className="relative z-10">
-         <SectionTitle>ALLIES</SectionTitle>
+         <SectionTitle>SPONSORS</SectionTitle>
          <SponsorsMarquee />
       </section>
 
