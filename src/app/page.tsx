@@ -10,6 +10,7 @@ import Timeline from '@/components/landing/Timeline'
 import SponsorsMarquee from '@/components/landing/SponsorsMarquee'
 import FaqAccordion from '@/components/landing/FaqAccordion'
 import Link from 'next/link'
+import About from '@/components/sections/About'
 
 // Dynamic import for Heavy 3D component with explicit loading state to prevent hydration mismatch
 const FluidBackground = dynamic(() => import('@/components/FluidBackground'), { 
@@ -73,17 +74,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="container mx-auto px-4 py-20 relative z-10">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <SectionTitle>THE VOID AWAITS</SectionTitle>
-          <p className="text-lg md:text-xl text-gray-300 leading-relaxed font-light">
-            Hacksavvy 2026 is not just a hackathon; it&apos;s a descent into pure innovation. 
-            We provide the infrastructure; you bring the code. 
-            Join 500+ developers, designers, and visionaries for 24 hours of 
-            uninterrupted creation in a high-performance environment.
-          </p>
-        </div>
-      </section>
+      <About />
 
       {/* Tracks Section */}
       <section id="tracks" className="container mx-auto px-4 relative z-10">
