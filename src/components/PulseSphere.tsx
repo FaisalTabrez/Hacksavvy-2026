@@ -140,6 +140,7 @@ function SphereParticles() {
       
       // Cooldown color
       materialRef.current.color.set('#00f0ff');
+      materialRef.current.size = 0.02; // Reset size to match IDLE
       meshRef.current.position.set(0, 0, 0);
 
       if (timerRef.current > RECOIL_DURATION) {
