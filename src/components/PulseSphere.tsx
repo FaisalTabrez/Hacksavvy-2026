@@ -8,7 +8,7 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing';
 
 type AnimationState = 'IDLE' | 'JITTER' | 'BALLOON' | 'RECOIL';
 
-const POINT_COUNT = 4000;
+const POINT_COUNT = 2000;
 const RADIUS = 1.5;
 
 function SphereParticles() {
@@ -56,7 +56,7 @@ function SphereParticles() {
       meshRef.current.rotation.x = Math.sin(t * 0.5) * 0.1;
       
       materialRef.current.color.set('#00f0ff');
-      materialRef.current.size = 0.015; 
+      materialRef.current.size = 0.02; 
       meshRef.current.position.set(0, 0, 0);
 
       if (timerRef.current > nextTransitionRef.current) {
@@ -79,10 +79,10 @@ function SphereParticles() {
       // Flashing Colors (Red/White) & Size Glitch
       if (Math.random() > 0.5) {
         materialRef.current.color.set('#ff0055'); // Red
-        materialRef.current.size = 0.025; // Randomly bigger
+        materialRef.current.size = 0.035; // Randomly bigger
       } else {
         materialRef.current.color.set('#ffffff'); // White
-        materialRef.current.size = 0.015;
+        materialRef.current.size = 0.02;
       }
 
       if (timerRef.current > JITTER_DURATION) {
@@ -105,7 +105,7 @@ function SphereParticles() {
 
       // HDR Color for Bloom (Hot Cyan)
       materialRef.current.color.setRGB(4, 10, 10); 
-      materialRef.current.size = 0.02;
+      materialRef.current.size = 0.03;
 
       if (timerRef.current > BALLOON_DURATION) {
         stateRef.current = 'RECOIL';
@@ -156,7 +156,7 @@ function SphereParticles() {
         ref={materialRef}
         transparent
         color="#00f0ff"
-        size={0.015}
+        size={0.02}
         sizeAttenuation={true}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
