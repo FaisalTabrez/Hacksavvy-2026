@@ -99,7 +99,6 @@ export default function FluidBackground() {
           <Fluid 
             rainbow={false}
             backgroundColor="#000000"
-            blending={THREE.AdditiveBlending}
             intensity={0.4}
             distortion={0.2}
             showBackground={false}
