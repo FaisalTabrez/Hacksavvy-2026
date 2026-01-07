@@ -67,14 +67,14 @@ export default function FluidBackground() {
       <Canvas style={{ background: '#000000' }}>
         <ambientLight intensity={10.1} />
         <directionalLight position={[2, 20, 10]} />
-        <Environment preset="warehouse" background />
+        <Environment preset="warehouse" />
         <RotatingTorus />
         <AutoFluidController />
         <EffectComposer>
           <Fluid 
             rainbow={true}
             intensity={0.4}
-            distortion={0.2}
+            distortion={0.1}
             showBackground={false}
           />
         </EffectComposer>
