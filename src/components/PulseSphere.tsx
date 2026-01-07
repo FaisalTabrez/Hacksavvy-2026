@@ -96,16 +96,16 @@ function SphereParticles() {
 
     // --- PHASE C: BALLOON ---
     else if (currentState === 'BALLOON') {
-      const BALLOON_DURATION = 0.8;
+      const BALLOON_DURATION = 2.5;
       
       // Progress 0 -> 1
       const progress = Math.min(timerRef.current / BALLOON_DURATION, 1);
 
       // 1. Rapid Rotation
-      meshRef.current.rotation.y += delta * 15; // Super fast spin
+      meshRef.current.rotation.y += delta * 5; 
 
-      // 2. Expansion (Lerp 1.0 -> 2.5) with ease-in expo feel
-      const scale = THREE.MathUtils.lerp(1.0, 3.5, progress * progress); // 2.5 was small, bumped to 3.5
+      // 2. Expansion (Lerp 1.0 -> 3.5) with ease-in expo feel
+      const scale = THREE.MathUtils.lerp(1.0, 3.5, progress * progress);
       meshRef.current.scale.set(scale, scale, scale);
 
       // Visuals
