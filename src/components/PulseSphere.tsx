@@ -91,10 +91,10 @@ function SphereParticles() {
 
     // --- PHASE C: BALLOON ---
     else if (currentState === 'BALLOON') {
-      const BALLOON_DURATION = 0.8; 
+      const BALLOON_DURATION = 3.5; 
       const progress = Math.min(timerRef.current / BALLOON_DURATION, 1);
 
-      meshRef.current.rotation.y += delta * 20; // Super fast spin
+      meshRef.current.rotation.y += delta * 3; 
 
       // Rapid Expansion: 1.0 -> 3.5
       const scale = THREE.MathUtils.lerp(1.0, 3.5, progress * progress); // 3.5 max scale
@@ -112,7 +112,7 @@ function SphereParticles() {
 
     // --- PHASE D: RECOIL (Implosion) ---
     else if (currentState === 'RECOIL') {
-      const RECOIL_DURATION = 0.6;
+      const RECOIL_DURATION = 2.0;
       const progress = Math.min(timerRef.current / RECOIL_DURATION, 1);
       
       // Bounce logic: 3.5 -> 0.8 -> 1.0
@@ -120,15 +120,17 @@ function SphereParticles() {
       if (progress < 0.5) {
         // First half: Shrink 3.5 -> 0.8
         const p = progress * 2; // 0 to 1
-        targetScale = THREE.MathUtils.lerp(3.5, 0.8, p); // Linear shrink
+        // Ease out cubic for shrinkage
+        const eased = 1 - Math.pow(1 - p, 3);
+        targetScale = THREE.MathUtils.lerp(3.5, 0.8, eased); 
       } else {
         // Second half: Settle 0.8 -> 1.0
         const p = (progress - 0.5) * 2; // 0 to 1
-        targetScale = THREE.MathUtils.lerp(0.8, 1.0, p * (2 - p)); // Ease out
+        targetScale = THREE.MathUtils.lerp(0.8, 1.0, p * (2 - p)); // Ease out quad
       }
       
       meshRef.current.scale.set(targetScale, targetScale, targetScale);
-      meshRef.current.rotation.y += delta * 2; // Slowing down rotation
+      meshRef.current.rotation.y += delta * 1; // Slowing down rotation
       
       // Cooldown color
       materialRef.current.color.set('#00f0ff');
