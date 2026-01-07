@@ -14,7 +14,7 @@ import About from '@/components/sections/About'
 import Guidelines from '@/components/sections/Guidelines'
 
 // Dynamic import for Heavy 3D component with explicit loading state to prevent hydration mismatch
-const FluidBackground = dynamic(() => import('@/components/FluidBackground'), { 
+const PulseSphereBackground = dynamic(() => import('@/components/PulseSphere'), { 
   ssr: false,
   loading: () => <div className="fixed inset-0 bg-[#0a0a0a] z-0" /> 
 })
@@ -38,7 +38,7 @@ export default function Home() {
     <main className="min-h-screen text-white selection:bg-[#00f0ff]/30 pb-32 overflow-hidden">
       
       <FloatingNav />
-      <FluidBackground />
+      <PulseSphereBackground />
 
       {/* Hero Section */}
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
