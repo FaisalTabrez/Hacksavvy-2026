@@ -3,29 +3,29 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Fluid } from '@whatisjery/react-fluid-distortion'
 import { EffectComposer } from '@react-three/postprocessing'
-import { Environment, Torus } from '@react-three/drei'
+import { Environment, MeshTransmissionMaterial } from '@react-three/drei'
 import { useEffect, useRef, useState } from 'react'
 
 function RotatingTorus() {
   const ref = useRef<any>(null)
   
-  useFrame((state, delta) => {
+  useFrame(() => {
     if (ref.current) {
-      ref.current.rotation.x += delta * 0.2
-      ref.current.rotation.y += delta * 0.3
+      ref.current.rotation.x += 0.005
+      ref.current.rotation.y += 0.01
     }
   })
 
   return (
-    <Torus ref={ref} args={[1, 0.4, 32, 100]}>
-      <meshStandardMaterial 
-        color="#8B5CF6"
-        roughness={0.1}
-        metalness={0.8}
-        emissive="#4C1D95"
-        emissiveIntensity={0.5}
+    <mesh position-z={-4} ref={ref}>
+      <torusGeometry args={[2.8, 0.8, 100, 100]} />
+      <MeshTransmissionMaterial 
+        transmission={1}
+        samples={1}
+        anisotropy={0}
+        chromaticAberration={0}
       />
-    </Torus>
+    </mesh>
   )
 }
 
@@ -65,9 +65,9 @@ export default function FluidBackground() {
   return (
     <div className={`fixed inset-0 z-0 ${isMobile ? 'pointer-events-none' : ''}`}>
       <Canvas style={{ background: '#000000' }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
-        <Environment preset="city" />
+        <ambientLight intensity={10.1} />
+        <directionalLight position={[2, 20, 10]} />
+        <Environment preset="warehouse" />
         <RotatingTorus />
         <AutoFluidController />
         <EffectComposer disableNormalPass multisampling={0}>
