@@ -48,10 +48,12 @@ function SphereParticles() {
     // --- PHASE A: IDLE ---
     if (currentState === 'IDLE') {
       meshRef.current.rotation.y += delta * 0.1;
-      meshRef.current.rotation.x = Math.sin(t * 0.5) * 0.1;
-      
-      const scale = 1 + Math.sin(t * 2) * 0.05;
+      // Gently introduce Scale Sine Wave starting from 0 (Scale 1.0)
+      const scale = 1 + Math.sin(timerRef.current * 2) * 0.05;
       meshRef.current.scale.set(scale, scale, scale);
+      
+      // X Rot: Continue global time sine wave
+      meshRef.current.rotation.x = Math.sin(t * 0.5) * 0.1;
       
       materialRef.current.color.set('#00f0ff');
       materialRef.current.size = 0.015; 
@@ -93,7 +95,8 @@ function SphereParticles() {
     else if (currentState === 'BALLOON') {
       const BALLOON_DURATION = 3.5; 
       const progress = Math.min(timerRef.current / BALLOON_DURATION, 1);
-
+      
+      meshRef.current.position.set(0, 0, 0); // Ensure centered
       meshRef.current.rotation.y += delta * 3; 
 
       // Rapid Expansion: 1.0 -> 3.5
@@ -130,7 +133,10 @@ function SphereParticles() {
       }
       
       meshRef.current.scale.set(targetScale, targetScale, targetScale);
-      meshRef.current.rotation.y += delta * 1; // Slowing down rotation
+      
+      // Rotation: Ease speed from 3.0 (Balloon end) to 0.1 (Idle start)
+      const rotationSpeed = THREE.MathUtils.lerp(3.0, 0.1, progress); 
+      meshRef.current.rotation.y += delta * rotationSpeed;
       
       // Cooldown color
       materialRef.current.color.set('#00f0ff');
