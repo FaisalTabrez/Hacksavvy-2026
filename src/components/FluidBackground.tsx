@@ -59,7 +59,7 @@ function StarfieldScene() {
 
 export default function FluidBackground() {
   return (
-    <div className="fixed top-0 left-0 w-full h-full -z-10 bg-[#0a0a0a]">
+    <div className="fixed top-0 left-0 w-full h-full z-0 bg-[#0a0a0a]">
       <Canvas
         camera={{ position: [0, 0, 1], fov: 75 }}
         dpr={[1, 2]}
