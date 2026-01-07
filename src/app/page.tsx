@@ -41,22 +41,22 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
         {/* Overlay Content */}
-        <div className="relative z-10 text-center mix-blend-overlay px-4">
+        <div className="relative z-10 text-center px-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1 }}
           >
-            <span className="inline-block px-4 py-1 mb-6 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-mono text-[#00f0ff]">
+            <span className="inline-block px-4 py-1 mb-6 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-mono text-[#00f0ff] shadow-[0_0_20px_rgba(0,240,255,0.3)]">
               ⚡ 400+ Hackers Registered
             </span>
-            <h1 className="text-6xl md:text-9xl font-black font-heading tracking-tighter text-white mb-6">
+            <h1 className="text-6xl md:text-9xl font-black font-heading tracking-tighter text-white mb-6 drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]">
               HACKSAVVY
               <br />
-              <span className="text-transparent bg-stroke text-white/90">2026</span>
+              <span className="text-transparent bg-stroke text-white/90 drop-shadow-md">2026</span>
             </h1>
-            <p className="text-xl md:text-2xl font-light text-gray-300 max-w-2xl mx-auto">
-              Enter the <span className="text-[#00f0ff] font-bold">Liquid Void</span>. 
+            <p className="text-xl md:text-2xl font-light text-gray-200 max-w-2xl mx-auto drop-shadow-lg font-sans">
+              Enter the <span className="text-[#00f0ff] font-bold drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">Liquid Void</span>. 
               Build the future on February 12-13.
             </p>
           </motion.div>

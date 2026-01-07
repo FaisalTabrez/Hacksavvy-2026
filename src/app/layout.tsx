@@ -20,7 +20,29 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Hacksavvy 2026",
-  description: "Liquid Void Hackathon",
+  description: "Liquid Void Hackathon. Build the future on February 12-13, 2026.",
+  openGraph: {
+    title: "Hacksavvy 2026",
+    description: "Join 500+ developers for 24 hours of pure innovation. Free for all students.",
+    url: "https://hacksavvy.vercel.app",
+    siteName: "Hacksavvy 2026",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Hacksavvy 2026 - Liquid Void",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hacksavvy 2026",
+    description: "Liquid Void Hackathon. Build the future.",
+    images: ["/og-image.jpg"],
+  },
 };
 
 export default function RootLayout({
