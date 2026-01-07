@@ -2,8 +2,10 @@
 
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Stars, Sparkles } from '@react-three/drei'
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import * as THREE from 'three'
+import { Fluid } from '@whatisjery/react-fluid-distortion'
+import { EffectComposer } from '@react-three/postprocessing'
 
 function StarfieldScene() {
   const groupRef = useRef<THREE.Group>(null)
@@ -57,6 +59,28 @@ function StarfieldScene() {
   )
 }
 
+function AutoFluidController() {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  useFrame((state) => {
+    if (isMobile) {
+      // Simulate pointer movement in a figure-8 pattern
+      const t = state.clock.getElapsedTime() * 0.5
+      state.pointer.x = Math.sin(t) * 0.5
+      state.pointer.y = Math.cos(t * 0.8) * 0.5
+    }
+  })
+
+  return null
+}
+
 export default function FluidBackground() {
   return (
     <div className="fixed top-0 left-0 w-full h-full z-0 bg-[#0a0a0a]">
@@ -70,6 +94,17 @@ export default function FluidBackground() {
         }}
       >
         <StarfieldScene />
+        <AutoFluidController />
+        <EffectComposer>
+          <Fluid 
+            rainbow={false}
+            backgroundColor="#000000"
+            blending={THREE.AdditiveBlending}
+            intensity={0.4}
+            distortion={0.2}
+            showBackground={false}
+          />
+        </EffectComposer>
       </Canvas>
       <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-[#0a0a0a]/50 pointer-events-none" />
     </div>
