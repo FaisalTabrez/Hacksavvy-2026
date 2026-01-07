@@ -18,15 +18,12 @@ function RotatingTorus() {
 
   return (
     <Torus ref={ref} args={[1, 0.4, 32, 100]}>
-      <MeshTransmissionMaterial 
-        backside
-        backsideThickness={5}
-        thickness={2}
-        chromaticAberration={1}
-        anisotropy={1} 
-        distortion={0.5}
-        distortionScale={1}
-        temporalDistortion={0.2}
+      <meshStandardMaterial 
+        color="#8B5CF6"
+        roughness={0.1}
+        metalness={0.8}
+        emissive="#4C1D95"
+        emissiveIntensity={0.5}
       />
     </Torus>
   )
