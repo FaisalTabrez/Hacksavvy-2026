@@ -72,6 +72,7 @@ export default function About() {
             content="MGIT, Hyderabad"
             subContent="Mahatma Gandhi Institute of Technology"
             delay={0.4}
+            link="https://maps.app.goo.gl/1386am23xjFuRRG16"
           />
         </div>
       </div>
@@ -79,25 +80,38 @@ export default function About() {
   )
 }
 
-function InfoCard({ icon, title, content, subContent, delay }: any) {
+function InfoCard({ icon, title, content, subContent, delay, link }: any) {
+  const CardContent = () => (
+    <div className="flex items-start gap-5">
+      <div className="p-3 rounded-xl bg-white/5 group-hover:bg-[#00f0ff]/20 transition-colors shrink-0">
+        {icon}
+      </div>
+      <div>
+        <h4 className="text-gray-400 text-sm font-mono mb-2 uppercase tracking-wide">{title}</h4>
+        <p className="text-xl md:text-2xl font-bold text-white mb-2 font-heading">{content}</p>
+        <p className="text-[#00f0ff] text-sm">{subContent}</p>
+      </div>
+    </div>
+  )
+
+  const containerClasses = "block p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md hover:border-[#00f0ff]/30 transition-all group w-full text-left"
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay }}
-      className="p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md hover:border-[#00f0ff]/30 transition-all group"
     >
-      <div className="flex items-start gap-5">
-        <div className="p-3 rounded-xl bg-white/5 group-hover:bg-[#00f0ff]/20 transition-colors shrink-0">
-          {icon}
+      {link ? (
+        <a href={link} target="_blank" rel="noopener noreferrer" className={containerClasses}>
+          <CardContent />
+        </a>
+      ) : (
+        <div className={containerClasses}>
+          <CardContent />
         </div>
-        <div>
-          <h4 className="text-gray-400 text-sm font-mono mb-2 uppercase tracking-wide">{title}</h4>
-          <p className="text-xl md:text-2xl font-bold text-white mb-2 font-heading">{content}</p>
-          <p className="text-[#00f0ff] text-sm">{subContent}</p>
-        </div>
-      </div>
+      )}
     </motion.div>
   )
 }

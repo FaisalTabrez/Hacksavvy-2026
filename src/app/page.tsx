@@ -57,7 +57,7 @@ export default function Home() {
               <span className="text-transparent bg-stroke text-white/90 drop-shadow-md">2026</span>
             </h1>
             <p className="text-xl md:text-2xl font-light text-gray-200 max-w-2xl mx-auto drop-shadow-lg font-sans">
-              Enter the <span className="text-[#00f0ff] font-bold drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">Liquid Void</span>. 
+              <span className="text-[#00f0ff] font-bold drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">Ideate Innovate Inspire</span>. 
               Build the future on February 12-13.
             </p>
           </motion.div>
