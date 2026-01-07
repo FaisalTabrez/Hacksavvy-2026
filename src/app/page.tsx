@@ -67,7 +67,7 @@ export default function Home() {
           <motion.p variants={fadeIn} className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
             Join us for 24 hours of innovation, coding, and breakthrough ideas.
             <br />
-            January 24-25, 2026
+            February 12-13, 2026
           </motion.p>
           <motion.div variants={fadeIn} className="flex gap-4 justify-center">
             <Link 
