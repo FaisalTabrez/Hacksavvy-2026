@@ -1,11 +1,12 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { PointMaterial, Points } from '@react-three/drei';
 import * as THREE from 'three';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
 
-type AnimationState = 'IDLE' | 'JITTER' | 'BALLOON';
+type AnimationState = 'IDLE' | 'JITTER' | 'BALLOON' | 'RECOIL';
 
 const POINT_COUNT = 4000;
 const RADIUS = 1.5;
@@ -14,26 +15,22 @@ function SphereParticles() {
   const meshRef = useRef<THREE.Points>(null);
   const materialRef = useRef<THREE.PointsMaterial>(null);
   
-  // State refs to avoid re-renders during animation loop
+  // State refs 
   const stateRef = useRef<AnimationState>('IDLE');
   const timerRef = useRef(0);
   const nextTransitionRef = useRef(Math.random() * 3 + 3); // 3 to 6 seconds
 
-  // 1. Generate Uniform Points on Sphere (Fibonacci Sphere Algorithm)
   const positions = useMemo(() => {
     const arr = new Float32Array(POINT_COUNT * 3);
-    const phi = Math.PI * (3 - Math.sqrt(5)); // Golden Angle
+    const phi = Math.PI * (3 - Math.sqrt(5)); 
 
     for (let i = 0; i < POINT_COUNT; i++) {
-      const y = 1 - (i / (POINT_COUNT - 1)) * 2; // y goes from 1 to -1
-      const radiusAtY = Math.sqrt(1 - y * y); // Radius at y
-
-      const theta = phi * i; // Golden angle increment
-
+      const y = 1 - (i / (POINT_COUNT - 1)) * 2; 
+      const radiusAtY = Math.sqrt(1 - y * y); 
+      const theta = phi * i; 
       const x = Math.cos(theta) * radiusAtY;
       const z = Math.sin(theta) * radiusAtY;
 
-      // Scale by desired radius
       arr[i * 3] = x * RADIUS;
       arr[i * 3 + 1] = y * RADIUS;
       arr[i * 3 + 2] = z * RADIUS;
@@ -44,26 +41,22 @@ function SphereParticles() {
   useFrame((state, delta) => {
     if (!meshRef.current || !materialRef.current) return;
 
-    // Update Timer
     timerRef.current += delta;
     const t = state.clock.elapsedTime;
     const currentState = stateRef.current;
 
     // --- PHASE A: IDLE ---
     if (currentState === 'IDLE') {
-      // Logic
       meshRef.current.rotation.y += delta * 0.1;
       meshRef.current.rotation.x = Math.sin(t * 0.5) * 0.1;
-
-      // Breathing
+      
       const scale = 1 + Math.sin(t * 2) * 0.05;
       meshRef.current.scale.set(scale, scale, scale);
-
-      // Reset Visuals
+      
       materialRef.current.color.set('#00f0ff');
+      materialRef.current.size = 0.015; 
       meshRef.current.position.set(0, 0, 0);
 
-      // Transition Check
       if (timerRef.current > nextTransitionRef.current) {
         stateRef.current = 'JITTER';
         timerRef.current = 0;
@@ -74,20 +67,22 @@ function SphereParticles() {
     else if (currentState === 'JITTER') {
       const JITTER_DURATION = 1.5;
 
-      // No rotation, just chaos
       const noise = 0.15;
-      meshRef.current.position.x = (Math.random() - 0.5) * noise;
-      meshRef.current.position.y = (Math.random() - 0.5) * noise;
-      meshRef.current.position.z = (Math.random() - 0.5) * noise;
+      meshRef.current.position.set(
+        (Math.random() - 0.5) * noise,
+        (Math.random() - 0.5) * noise,
+        (Math.random() - 0.5) * noise
+      );
 
-      // Flickering Color (Red / White alert)
+      // Flashing Colors (Red/White) & Size Glitch
       if (Math.random() > 0.5) {
-        materialRef.current.color.set('#ff003c'); // Cyberpunk Red
+        materialRef.current.color.set('#ff0055'); // Red
+        materialRef.current.size = 0.025; // Randomly bigger
       } else {
-        materialRef.current.color.set('#ffffff');
+        materialRef.current.color.set('#ffffff'); // White
+        materialRef.current.size = 0.015;
       }
 
-      // Transition Check
       if (timerRef.current > JITTER_DURATION) {
         stateRef.current = 'BALLOON';
         timerRef.current = 0;
@@ -96,30 +91,53 @@ function SphereParticles() {
 
     // --- PHASE C: BALLOON ---
     else if (currentState === 'BALLOON') {
-      const BALLOON_DURATION = 2.5;
-      
-      // Progress 0 -> 1
+      const BALLOON_DURATION = 0.8; 
       const progress = Math.min(timerRef.current / BALLOON_DURATION, 1);
 
-      // 1. Rapid Rotation
-      meshRef.current.rotation.y += delta * 5; 
+      meshRef.current.rotation.y += delta * 20; // Super fast spin
 
-      // 2. Expansion (Lerp 1.0 -> 3.5) with ease-in expo feel
-      const scale = THREE.MathUtils.lerp(1.0, 3.5, progress * progress);
+      // Rapid Expansion: 1.0 -> 3.5
+      const scale = THREE.MathUtils.lerp(1.0, 3.5, progress * progress); // 3.5 max scale
       meshRef.current.scale.set(scale, scale, scale);
 
-      // Visuals
-      materialRef.current.color.set('#00f0ff'); // Reset color during explosion
+      // HDR Color for Bloom (Hot Cyan)
+      materialRef.current.color.setRGB(4, 10, 10); 
+      materialRef.current.size = 0.02;
 
-      // Transition Check
       if (timerRef.current > BALLOON_DURATION) {
-        // RESET
+        stateRef.current = 'RECOIL';
+        timerRef.current = 0;
+      }
+    }
+
+    // --- PHASE D: RECOIL (Implosion) ---
+    else if (currentState === 'RECOIL') {
+      const RECOIL_DURATION = 0.6;
+      const progress = Math.min(timerRef.current / RECOIL_DURATION, 1);
+      
+      // Bounce logic: 3.5 -> 0.8 -> 1.0
+      let targetScale = 1.0;
+      if (progress < 0.5) {
+        // First half: Shrink 3.5 -> 0.8
+        const p = progress * 2; // 0 to 1
+        targetScale = THREE.MathUtils.lerp(3.5, 0.8, p); // Linear shrink
+      } else {
+        // Second half: Settle 0.8 -> 1.0
+        const p = (progress - 0.5) * 2; // 0 to 1
+        targetScale = THREE.MathUtils.lerp(0.8, 1.0, p * (2 - p)); // Ease out
+      }
+      
+      meshRef.current.scale.set(targetScale, targetScale, targetScale);
+      meshRef.current.rotation.y += delta * 2; // Slowing down rotation
+      
+      // Cooldown color
+      materialRef.current.color.set('#00f0ff');
+      meshRef.current.position.set(0, 0, 0);
+
+      if (timerRef.current > RECOIL_DURATION) {
         stateRef.current = 'IDLE';
         timerRef.current = 0;
-        nextTransitionRef.current = Math.random() * 3 + 3; // New random time
-        meshRef.current.scale.set(1, 1, 1);
-        meshRef.current.position.set(0, 0, 0);
-        meshRef.current.rotation.set(0, 0, 0);
+        nextTransitionRef.current = Math.random() * 3 + 3;
       }
     }
   });
@@ -134,6 +152,7 @@ function SphereParticles() {
         sizeAttenuation={true}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
+        toneMapped={false} 
       />
     </Points>
   );
@@ -151,10 +170,19 @@ export default function PulseSphereBackground() {
         }}
       >
         <color attach="background" args={['#050505']} />
+        
         <SphereParticles />
+        
+        <EffectComposer>
+            <Bloom 
+                luminanceThreshold={1}
+                mipmapBlur
+                intensity={2}
+            />
+        </EffectComposer>
+        
         <ambientLight intensity={1} />
       </Canvas>
-      {/* Vignette Overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#000000_100%)] pointer-events-none opacity-80" />
     </div>
   );
