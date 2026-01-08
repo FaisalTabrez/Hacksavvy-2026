@@ -93,7 +93,7 @@ export default function Home() {
 
       {/* Tracks Section */}
       <section id="tracks" className="container mx-auto px-4 relative z-10">
-        <SectionTitle>THE HOLO-DECK</SectionTitle>
+        <SectionTitle>THEMES</SectionTitle>
         <TracksGrid />
       </section>
 
