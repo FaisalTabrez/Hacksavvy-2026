@@ -19,6 +19,13 @@ const PulseSphereBackground = dynamic(() => import('@/components/PulseSphere'), 
   loading: () => <div className="fixed inset-0 bg-[#0a0a0a] z-0" /> 
 })
 
+// Dynamic import for Fluid Distortion (Client-side only)
+const FluidLayer = dynamic(() => import('@/components/backgrounds/FluidLayer'), {
+  ssr: false,
+  // Make it fully transparent or absent while loading to avoid flash
+  loading: () => <div className="absolute inset-0 z-10 pointer-events-none" />
+})
+
 const SectionTitle = ({ children, id }: { children: React.ReactNode, id?: string }) => (
   <motion.h2 
     id={id}
@@ -38,12 +45,19 @@ export default function Home() {
     <main className="min-h-screen text-white selection:bg-[#00f0ff]/30 pb-32 overflow-hidden">
       
       <FloatingNav />
+      
+      {/* Background Layer: 3D Particles */}
       <PulseSphereBackground />
+      
+      {/* Background Overlay: Fluid Distortion (REMOVED) */}
+      {/* <div className="fixed inset-0 z-[1] pointer-events-none md:pointer-events-auto">
+        <FluidLayer />
+      </div> */}
 
       {/* Hero Section */}
-      <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
-        {/* Overlay Content */}
-        <div className="relative z-10 text-center px-4">
+      <section className="relative z-10 h-screen flex flex-col items-center justify-center overflow-hidden pointer-events-none">
+        {/* Enable pointer events on interactive children only */}
+        <div className="relative z-10 text-center px-4 pointer-events-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}

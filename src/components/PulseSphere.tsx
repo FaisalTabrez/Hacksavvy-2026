@@ -83,9 +83,82 @@ function SphereParticles() {
       meshRef.current.scale.set(scale, scale, scale);
       
       // Gentle Wobble on X
-      // We perform a LERP towards the target wobble to avoid snapping if previous state left us skewed
       const targetRotX = Math.sin(t * 0.5) * 0.1;
       meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, targetRotX, delta * 2.0);
+
+      // Interactive Fluid Distortion (Cursor-based)
+      const hoverRadius = 0.8; 
+      const uDistort = 0.25; // Slightly stronger locally
+      
+      // Map pointer (-1 to 1) to world space at Z=0
+      const mx = (state.pointer.x * state.viewport.width) / 2;
+      const my = (state.pointer.y * state.viewport.height) / 2;
+
+      for (let i = 0; i < POINT_COUNT; i++) {
+        const ix = i * 3;
+        const ox = originalPositions[ix];
+        const oy = originalPositions[ix+1];
+        const oz = originalPositions[ix+2];
+
+        // Apply global rotation to original positions to match "visual" mouse hit?
+        // Actually, since we are moving the *points* within the mesh space, and the mesh is rotating...
+        // The mouse coordinates are in World Space. The points are in Local Space.
+        // To do this accurately, we should transform mouse to local, or points to world.
+        // Simplified approach: Inverse rotate the mouse position to align with the mesh's IDLE rotation?
+        // IDLE rotation is slow, but nonzero. 
+        // For a hackathon background, comparing World Mouse vs Local Point is often mismatched if rotating.
+        // Let's assume mesh.position is (0,0,0).
+        // Let's transform mouse into local space by reversing the Y rotation.
+        // rotY = meshRef.current.rotation.y
+        
+        const rotY = meshRef.current.rotation.y;
+        // Rotate mouse (mx, my, 0) by -rotY around Y axis? 
+        // Mouse is 2D plane. This is tricky.
+        // Alternative: Just ignore rotation for the interaction (it will drift) or use simple distance in 2D (screen space).
+        // Let's project point to screen space? Expensive.
+        
+        // Let's try "Local Mouse" Approach (approximate):
+        const cosR = Math.cos(-rotY);
+        const sinR = Math.sin(-rotY);
+        const lmx = mx * cosR - 0 * sinR; // z=0 for mouse
+        const lmz = mx * sinR + 0 * cosR;
+        // lmy = my
+        
+        const dx = lmx - ox;
+        const dy = my - oy;
+        // Include Z distance to "plane" of mouse? Or just XY.
+        // Let's use 3D distance from particle to "Mouse Line"
+        const distSq = dx*dx + dy*dy; 
+
+        if (distSq < hoverRadius * hoverRadius) {
+            const dist = Math.sqrt(distSq);
+            const strength = THREE.MathUtils.smoothstep(hoverRadius - dist, 0, hoverRadius); // 0 at center?? No.
+            // smoothstep(min, max, val) returns 0 if val < min, 1 if val > max.
+            // We want 1 at dist=0, 0 at dist=radius.
+            const falloff = 1.0 - (dist / hoverRadius);
+            const intensity = falloff * falloff; // Squared falloff
+
+            // Fluid Noise
+            const time = t * 2.0;
+            const noise = (
+                Math.sin(ox * 2.0 + time) + 
+                Math.sin(oy * 3.0 + time)
+            ) / 2.0;
+
+            const displacement = 1 + (noise * uDistort * intensity);
+
+            posAttr.setXYZ(
+                i,
+                ox * displacement,
+                oy * displacement,
+                oz * displacement
+            );
+        } else {
+            // Reset to original if not affected (Clean up previous noise)
+             posAttr.setXYZ(i, ox, oy, oz);
+        }
+      }
+      posAttr.needsUpdate = true;
 
       // Reset aesthetics
       materialRef.current.size = 0.02; 
@@ -425,6 +498,7 @@ export default function PulseSphereBackground() {
         
         <SphereParticles />
         
+        {/*
         <EffectComposer>
             <Bloom 
                 luminanceThreshold={1}
@@ -432,6 +506,7 @@ export default function PulseSphereBackground() {
                 intensity={2}
             />
         </EffectComposer>
+        */}
         
         <ambientLight intensity={1} />
       </Canvas>
