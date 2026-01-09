@@ -53,7 +53,16 @@ export async function registerTeam(formData: FormData) {
     }
 
     // 1. Save to Supabase 'teams' table
-    const allMembers = [data.leader, ...data.members]; // Combine for easier storage/logic if needed, but schema asks for leader_id + members_data
+    // Transform data to match Database Schema (snake_case)
+    const allMembers = [data.leader, ...data.members].map((member: any) => ({
+        name: member.name,
+        email: member.email,
+        phone: member.phone,
+        college: member.college,
+        roll_no: member.rollNo,
+        diet_preference: member.dietPreference,
+        allergies: member.allergies
+    }));
 
     const { error: dbError } = await supabase
       .from('teams')

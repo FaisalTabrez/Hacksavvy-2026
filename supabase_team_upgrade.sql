@@ -22,5 +22,19 @@ ALTER TABLE public.teams
   ADD COLUMN IF NOT EXISTS transaction_id text,
   ADD COLUMN IF NOT EXISTS accommodation_needed boolean DEFAULT false;
 
+-- JSON Schema Documentation for 'members_data':
+-- Array of Objects:
+-- [
+--   {
+--     "name": "string",
+--     "email": "string",
+--     "phone": "string",
+--     "college": "string",
+--     "roll_no": "string",
+--     "diet_preference": "Vegetarian" | "Non-Vegetarian" | "Jain",
+--     "allergies": "string" (optional)
+--   }
+-- ]
+
 -- 4. Clean up old columns if they exist (optional, but requested schema is specific)
 -- We keep them if we want to preserve old data, but for this task we focus on the new structure.
