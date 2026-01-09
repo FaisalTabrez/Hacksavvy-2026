@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono, Geist, Geist_Mono } from "next/font/google"; // Try consistent imports
 import { ClerkProvider } from '@clerk/nextjs'
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
