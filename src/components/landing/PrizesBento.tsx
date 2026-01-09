@@ -31,29 +31,7 @@ export default function PrizesBento() {
         </div>
       </motion.div>
 
-      {/* Swag Kits */}
-      <motion.div 
-        whileHover={{ y: -5 }}
-        className="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm flex flex-col gap-4"
-      >
-        <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
-          <Gift size={24} />
-        </div>
-        <h4 className="text-xl font-bold">Premium Swag</h4>
-        <p className="text-gray-400 text-sm">Hoodies, tees, and stickers for all participants.</p>
-      </motion.div>
-
-      {/* Internships */}
-      <motion.div 
-        whileHover={{ y: -5 }}
-        className="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm flex flex-col gap-4"
-      >
-        <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-          <Briefcase size={24} />
-        </div>
-        <h4 className="text-xl font-bold">Career Growth</h4>
-        <p className="text-gray-400 text-sm">Internship interviews with top sponsor companies.</p>
-      </motion.div>
+      {/* Removed Premium Swag and Career Growth per request */}
 
       {/* Certificates */}
       <motion.div 
