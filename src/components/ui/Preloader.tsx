@@ -87,51 +87,46 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                 </div>
             </motion.div>
 
-            {/* --- The Rabbit Robot --- */}
+            {/* --- The Generic Robot --- */}
             <motion.div
-               className="relative w-64 h-64 md:w-80 md:h-80"
+               className="relative flex flex-col items-center justify-center transform scale-75 md:scale-100"
                animate={
                  phase === 'dash' 
                    ? { x: '120vw', skewX: -20, transition: { duration: 0.5, ease: "backIn" } } 
                    : { x: 0, transition: { type: 'spring', stiffness: 100 } }
                }
             >
-                {/* Rabbit Body Image Placeholder */}
-                {/* To use your asset, replace the src below. Using a CSS placeholder for now. */}
-                <div className="w-full h-full relative">
-                    <img 
-                        src="/assets/rabbit-body.png" 
-                        alt="Rabbit Robot" 
-                        className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(0,240,255,0.2)]"
-                        onError={(e) => {
-                            // Fallback if image missing: A white silhouette shape
-                            e.currentTarget.style.display = 'none';
-                            const fallback = document.getElementById('rabbit-fallback');
-                            if(fallback) fallback.style.display = 'flex';
-                        }}
+                {/* Antenna */}
+                <div className="w-2 h-10 bg-gray-600 mb-[-5px] relative z-0 flex justify-center">
+                    <motion.div 
+                        className={`absolute -top-3 w-6 h-6 rounded-full shadow-[0_0_15px] ${
+                            phase === 'charging' 
+                                ? 'bg-red-500 shadow-red-500' 
+                                : 'bg-[#00f0ff] shadow-[#00f0ff]'
+                        }`}
+                        animate={phase === 'charging' ? { opacity: [0.4, 1, 0.4] } : { opacity: 1 }}
+                        transition={{ repeat: Infinity, duration: 1 }}
                     />
-                    
-                    {/* Fallback Shape (White Body) */}
-                    <div id="rabbit-fallback" className="hidden absolute inset-0 bg-white items-center justify-center rounded-[3rem] shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-                       <span className="text-black font-mono text-xs opacity-50">NO IMAGE</span>
-                    </div>
+                </div>
 
-                    {/* --- Digital Face (The Eyes) --- */}
-                    <div className="absolute top-[35%] left-1/2 -translate-x-1/2 w-24 h-12 flex items-center justify-between px-2 bg-black/80 rounded-lg backdrop-blur-sm border border-white/10 shadow-[0_0_10px_rgba(0,0,0,1)_inset]">
-                        
+                {/* Head */}
+                <div className="w-56 h-44 bg-[#0a0a0a] border-2 border-[#00f0ff] rounded-3xl relative z-20 flex items-center justify-center shadow-[0_0_30px_rgba(0,240,255,0.15)] overflow-hidden">
+                    {/* Screen Scanlines */}
+                    <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none opacity-50" />
+                    
+                    {/* Face Container */}
+                    <div className="w-40 h-20 flex items-center justify-between px-4 bg-transparent z-20">
                         {/* Eye Left */}
-                        <motion.div 
-                           className="w-8 h-8 flex items-center justify-center"
-                        >
+                        <motion.div className="w-10 h-10 flex items-center justify-center">
                            {phase === 'charging' ? (
                                <motion.div 
-                                 className="w-6 h-1 bg-[#00f0ff] rounded-full shadow-[0_0_8px_#00f0ff]"
+                                 className="w-8 h-1.5 bg-[#00f0ff] rounded-full shadow-[0_0_8px_#00f0ff]"
                                  animate={{ opacity: [0.5, 1, 0.5] }}
                                  transition={{ repeat: Infinity, duration: 1.5 }}
                                />
                            ) : (
                                <motion.div 
-                                 className="w-6 h-6 border-4 border-[#00f0ff] rounded-full shadow-[0_0_10px_#00f0ff]"
+                                 className="w-8 h-8 border-4 border-[#00f0ff] rounded-full shadow-[0_0_10px_#00f0ff]"
                                  initial={{ scale: 0 }}
                                  animate={{ scale: 1 }}
                                />
@@ -139,33 +134,47 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                         </motion.div>
 
                          {/* Eye Right */}
-                        <motion.div 
-                           className="w-8 h-8 flex items-center justify-center"
-                        >
+                        <motion.div className="w-10 h-10 flex items-center justify-center">
                            {phase === 'charging' ? (
                                <motion.div 
-                                 className="w-6 h-1 bg-[#00f0ff] rounded-full shadow-[0_0_8px_#00f0ff]"
+                                 className="w-8 h-1.5 bg-[#00f0ff] rounded-full shadow-[0_0_8px_#00f0ff]"
                                  animate={{ opacity: [0.5, 1, 0.5] }}
                                  transition={{ repeat: Infinity, duration: 1.5 }}
                                />
                            ) : (
                                <motion.div 
-                                 className="w-6 h-6 border-4 border-[#00f0ff] rounded-full shadow-[0_0_10px_#00f0ff]"
+                                 className="w-8 h-8 border-4 border-[#00f0ff] rounded-full shadow-[0_0_10px_#00f0ff]"
                                  initial={{ scale: 0 }}
                                  animate={{ scale: 1 }}
                                />
                            )}
                         </motion.div>
                     </div>
+
+                    {/* Mouth Line (Optional visual detail) */}
+                    <div className="absolute bottom-8 w-16 h-1 bg-[#00f0ff]/20 rounded-full" />
+                </div>
+
+                {/* Neck */}
+                <div className="w-32 h-6 bg-gray-800 z-10 mt-[-2px] border-x border-gray-700" />
+
+                {/* Body */}
+                <div className="w-48 h-32 bg-gray-900 rounded-b-[3rem] rounded-t-xl z-10 border border-white/5 relative flex justify-center pt-6 shadow-lg">
+                     {/* Chest Piece */}
+                     <div className="w-24 h-16 border border-[#00f0ff]/30 rounded-lg bg-black/50 flex flex-col items-center justify-center gap-1">
+                        <div className="w-16 h-1 bg-[#00f0ff]/20 rounded-full" />
+                        <div className="w-16 h-1 bg-[#00f0ff]/20 rounded-full" />
+                        <div className="w-16 h-1 bg-[#00f0ff]/20 rounded-full" />
+                     </div>
                 </div>
 
                 {/* --- Shockwave Effect (Phase 2) --- */}
                 {phase === 'awake' && (
                     <motion.div
-                       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full rounded-full border-2 border-[#00f0ff]"
+                       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border-2 border-[#00f0ff]"
                        initial={{ scale: 0.5, opacity: 1 }}
-                       animate={{ scale: 2, opacity: 0 }}
-                       transition={{ duration: 0.5 }}
+                       animate={{ scale: 2.5, opacity: 0 }}
+                       transition={{ duration: 0.6, ease: "easeOut" }}
                     />
                 )}
             </motion.div>
