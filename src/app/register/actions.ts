@@ -22,12 +22,12 @@ export async function registerTeam(formData: FormData) {
     }
 
     const data = JSON.parse(rawData as string)
-    // Structure: { teamName, track, projectTitle, abstract, leader, members, transactionId, accommodation }
+    // Structure: { teamName, track, leader, members, transactionId, accommodation }
     
-    // Validate Team Size (Leader + Members) -> Min 2, Max 4
+    // Validate Team Size (Leader + Members) -> Min 2, Max 5
     const teamSize = 1 + (data.members?.length || 0);
-    if (teamSize < 2 || teamSize > 4) {
-        return { success: false, error: 'Team size must be 2-4 members' }
+    if (teamSize < 2 || teamSize > 5) {
+        return { success: false, error: 'Team size must be 2-5 members' }
     }
 
     let screenshotUrl = null
@@ -60,8 +60,7 @@ export async function registerTeam(formData: FormData) {
         phone: member.phone,
         college: member.college,
         roll_no: member.rollNo,
-        diet_preference: member.dietPreference,
-        allergies: member.allergies
+        diet_preference: member.dietPreference
     }));
 
     const { error: dbError } = await supabase
@@ -70,8 +69,6 @@ export async function registerTeam(formData: FormData) {
         leader_user_id: userId, // Auth ID
         team_name: data.teamName,
         track: data.track,
-        project_title: data.projectTitle,
-        abstract: data.abstract,
         members_data: allMembers, // Store structured JSON of everyone
         payment_status: 'pending',
         payment_screenshot_url: screenshotUrl,
@@ -106,7 +103,6 @@ export async function registerTeam(formData: FormData) {
                 <h1>Welcome to Hacksavvy 2026!</h1>
                 <p>Hi ${member.name},</p>
                 <p>Your team <strong>${data.teamName}</strong> has been successfully registered.</p>
-                <p><strong>Project:</strong> ${data.projectTitle}</p>
                 <p><strong>Track:</strong> ${data.track}</p>
                 <p><strong>Status:</strong> Payment Pending Verification</p>
                 <br/>

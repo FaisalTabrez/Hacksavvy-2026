@@ -16,16 +16,14 @@ const memberSchema = z.object({
   phone: z.string().min(10, "Phone number required"),
   college: z.string().min(2, "College name required"),
   rollNo: z.string().optional(),
-  dietPreference: z.enum(['Vegetarian', 'Non-Vegetarian', 'Jain']),
-  allergies: z.string().optional(),
+  dietPreference: z.enum(['Vegetarian', 'Non-Vegetarian']),
 })
 
 const registrationSchema = z.object({
   // Section A
   teamName: z.string().min(3, "Team Name must be at least 3 chars"),
   track: z.enum(["AI", "CyberSec", "IoT", "Blockchain", "Robotics", "Open Innovation"]),
-  projectTitle: z.string().min(3, "Project Title required"),
-  abstract: z.string().min(20, "Abstract must be at least 20 chars"),
+  // Removed Project Title and Abstract
 
   // Section B
   leader: z.object({
@@ -34,10 +32,9 @@ const registrationSchema = z.object({
     phone: z.string().min(10, "Phone required"),
     college: z.string().min(2, "College required"),
     rollNo: z.string().min(1, "Roll No required"),
-    dietPreference: z.enum(['Vegetarian', 'Non-Vegetarian', 'Jain']),
-    allergies: z.string().optional(),
+    dietPreference: z.enum(['Vegetarian', 'Non-Vegetarian']),
   }),
-  members: z.array(memberSchema).max(3), // Max 3 extra members
+  members: z.array(memberSchema).max(4), // Max 4 extra members (Total 5)
 
   // Section C
   transactionId: z.string().min(4, "Transaction ID required"),
@@ -63,8 +60,6 @@ export default function RegistrationForm({ user }: { user: any }) {
     defaultValues: {
       teamName: '',
       track: 'Open Innovation',
-      projectTitle: '',
-      abstract: '',
       leader: {
         name: user.fullName || '',
         email: user.primaryEmailAddress?.emailAddress || '',
@@ -72,7 +67,6 @@ export default function RegistrationForm({ user }: { user: any }) {
         college: '',
         rollNo: '',
         dietPreference: 'Vegetarian',
-        allergies: '',
       },
       members: [], // Start with 0 extra members
       transactionId: '',
@@ -90,8 +84,8 @@ export default function RegistrationForm({ user }: { user: any }) {
     
     // Team Size Validation (Leader + Members)
     const totalSize = 1 + data.members.length
-    if (totalSize < 2 || totalSize > 4) {
-      setSubmissionError("Team size must be between 2 and 4 members.")
+    if (totalSize < 2 || totalSize > 5) {
+      setSubmissionError("Team size must be between 2 and 5 members.")
       return
     }
 
@@ -150,26 +144,6 @@ export default function RegistrationForm({ user }: { user: any }) {
             {errors.track && <p className="text-red-500 text-xs mt-1">{errors.track.message}</p>}
           </div>
         </div>
-
-        <div>
-          <label className="block text-sm mb-1 text-gray-400">Project Title</label>
-          <input 
-            {...register("projectTitle")}
-            className="w-full bg-black/50 border border-white/10 rounded-lg p-3 focus:border-[#00f0ff] outline-none"
-            placeholder="Project Name"
-          />
-          {errors.projectTitle && <p className="text-red-500 text-xs mt-1">{errors.projectTitle.message}</p>}
-        </div>
-
-        <div>
-          <label className="block text-sm mb-1 text-gray-400">Abstract</label>
-          <textarea 
-            {...register("abstract")}
-            className="w-full bg-black/50 border border-white/10 rounded-lg p-3 focus:border-[#00f0ff] outline-none min-h-[100px]"
-            placeholder="Brief description of your project..."
-          />
-          {errors.abstract && <p className="text-red-500 text-xs mt-1">{errors.abstract.message}</p>}
-        </div>
       </div>
 
       {/* SECTION B: Members */}
@@ -205,20 +179,13 @@ export default function RegistrationForm({ user }: { user: any }) {
                {errors.leader?.rollNo && <p className="text-red-500 text-xs">{errors.leader.rollNo.message}</p>}
              </div>
              
-             {/* Leader Diet & Allergies */}
-             <div className="grid grid-cols-2 gap-4 md:col-span-2">
-                 <div>
-                    <label className="text-xs text-gray-500">Food Preference</label>
-                    <select {...register("leader.dietPreference")} className="w-full bg-black/30 border-b border-gray-700 p-2 outline-none focus:border-[#00f0ff] rounded-t-lg">
-                        <option value="Vegetarian">Vegetarian</option>
-                        <option value="Non-Vegetarian">Non-Vegetarian</option>
-                        <option value="Jain">Jain (No Onion/Garlic)</option>
-                    </select>
-                 </div>
-                 <div>
-                    <label className="text-xs text-gray-500">Allergies (Optional)</label>
-                    <input {...register("leader.allergies")} placeholder="e.g. Peanuts" className="w-full bg-transparent border-b border-gray-700 p-2 outline-none focus:border-[#00f0ff]" />
-                 </div>
+             {/* Leader Diet (Allergies Removed) */}
+             <div className="md:col-span-2">
+                <label className="text-xs text-gray-500">Food Preference</label>
+                <select {...register("leader.dietPreference")} className="w-full bg-black/30 border-b border-gray-700 p-2 outline-none focus:border-[#00f0ff]">
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Non-Vegetarian">Non-Vegetarian</option>
+                </select>
              </div>
           </div>
         </div>
@@ -253,35 +220,30 @@ export default function RegistrationForm({ user }: { user: any }) {
                  {errors.members?.[index]?.college && <p className="text-red-500 text-xs">{errors.members[index]?.college?.message}</p>}
               </div>
 
-               {/* Member Diet & Allergies */}
-               <div className="grid grid-cols-2 gap-4 md:col-span-2">
-                 <div>
-                    <select {...register(`members.${index}.dietPreference`)} className="w-full bg-black/30 border-b border-gray-700 p-2 outline-none focus:border-blue-500 rounded-t-lg">
-                        <option value="Vegetarian">Vegetarian</option>
-                        <option value="Non-Vegetarian">Non-Vegetarian</option>
-                        <option value="Jain">Jain</option>
-                    </select>
-                 </div>
-                 <div>
-                    <input {...register(`members.${index}.allergies`)} placeholder="Allergies (Optional)" className="w-full bg-transparent border-b border-gray-700 p-2 outline-none focus:border-blue-500" />
-                 </div>
+               {/* Member Diet (Allergies Removed) */}
+               <div className="md:col-span-2">
+                 <label className="text-xs text-gray-500">Food Preference</label>
+                 <select {...register(`members.${index}.dietPreference`)} className="w-full bg-black/30 border-b border-gray-700 p-2 outline-none focus:border-blue-500">
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Non-Vegetarian">Non-Vegetarian</option>
+                 </select>
               </div>
             </div>
           </div>
         ))}
 
-        {fields.length < 3 && (
+        {fields.length < 4 && (
           <button
             type="button"
-            onClick={() => append({ name: '', email: '', phone: '', college: '', rollNo: '', dietPreference: 'Vegetarian', allergies: '' })}
+            onClick={() => append({ name: '', email: '', phone: '', college: '', rollNo: '', dietPreference: 'Vegetarian' })}
             className="w-full py-4 border-2 border-dashed border-gray-700 rounded-xl flex items-center justify-center gap-2 text-gray-500 hover:border-gray-500 hover:text-gray-300 transition"
           >
             <Plus className="w-5 h-5" />
-            Add Member ({fields.length}/3)
+            Add Member ({fields.length}/4)
           </button>
         )}
         <p className="text-xs text-gray-500 text-center">
-            Total Team Size: {1 + fields.length} (Min 2, Max 4)
+            Total Team Size: {1 + fields.length} (Min 2, Max 5)
         </p>
       </div>
 

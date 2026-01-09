@@ -34,7 +34,7 @@ export default function RegisterPage() {
             Team Registration
             </h1>
             <p className="text-gray-400 max-w-xl mx-auto">
-                Assemble your squad. Minimum 2, Maximum 4 members. 
+                Assemble your squad. Minimum 2, Maximum 5 members. 
                 Ensure you have your payment screenshot ready.
             </p>
         </div>

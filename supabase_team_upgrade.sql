@@ -13,8 +13,6 @@ CREATE TABLE IF NOT EXISTS public.teams (
 ALTER TABLE public.teams 
   ADD COLUMN IF NOT EXISTS team_name text UNIQUE,
   ADD COLUMN IF NOT EXISTS track text,
-  ADD COLUMN IF NOT EXISTS project_title text,
-  ADD COLUMN IF NOT EXISTS abstract text,
   ADD COLUMN IF NOT EXISTS leader_user_id text,
   ADD COLUMN IF NOT EXISTS members_data jsonb,
   ADD COLUMN IF NOT EXISTS payment_status text DEFAULT 'pending',
@@ -31,8 +29,7 @@ ALTER TABLE public.teams
 --     "phone": "string",
 --     "college": "string",
 --     "roll_no": "string",
---     "diet_preference": "Vegetarian" | "Non-Vegetarian" | "Jain",
---     "allergies": "string" (optional)
+--     "diet_preference": "Vegetarian" | "Non-Vegetarian"
 --   }
 -- ]
 
