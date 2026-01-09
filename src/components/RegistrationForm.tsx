@@ -45,9 +45,39 @@ const registrationSchema = z.object({
 
 export type RegistrationFormValues = z.infer<typeof registrationSchema>
 
-export default function RegistrationForm({ user }: { user: any }) {
+export default function RegistrationForm({ user, initialData }: { user: any, initialData?: any }) {
   const [screenshot, setScreenshot] = useState<File | null>(null)
   const [submissionError, setSubmissionError] = useState<string | null>(null)
+
+  // Parse initialData if present to match form shape
+  const defaultValues: Partial<RegistrationFormValues> = initialData ? {
+    teamName: initialData.team_name,
+    track: initialData.track,
+    transactionId: initialData.transaction_id,
+    accommodation: initialData.accommodation_needed,
+    leader: {
+        ...initialData.members_data[0],
+        rollNo: initialData.members_data[0].roll_no // Map snake_case to camelCase
+    },
+    members: initialData.members_data.slice(1).map((m: any) => ({
+        ...m,
+        rollNo: m.roll_no // Map snake_case
+    }))
+  } : {
+      teamName: '',
+      track: 'Open Innovation',
+      leader: {
+        name: user?.fullName || '',
+        email: user?.primaryEmailAddress?.emailAddress || '',
+        phone: '',
+        college: '',
+        rollNo: '',
+        dietPreference: 'Vegetarian',
+      },
+      members: [], // Start with 0 extra members
+      transactionId: '',
+      accommodation: false,
+  };
 
   const {
     register,
@@ -57,21 +87,7 @@ export default function RegistrationForm({ user }: { user: any }) {
     watch,
   } = useForm<RegistrationFormValues>({
     resolver: zodResolver(registrationSchema) as any,
-    defaultValues: {
-      teamName: '',
-      track: 'Open Innovation',
-      leader: {
-        name: user.fullName || '',
-        email: user.primaryEmailAddress?.emailAddress || '',
-        phone: '',
-        college: '',
-        rollNo: '',
-        dietPreference: 'Vegetarian',
-      },
-      members: [], // Start with 0 extra members
-      transactionId: '',
-      accommodation: false,
-    },
+    defaultValues: defaultValues as any,
   })
 
   const { fields, append, remove } = useFieldArray({
@@ -218,6 +234,11 @@ export default function RegistrationForm({ user }: { user: any }) {
               <div>
                  <input {...register(`members.${index}.college`)} placeholder="College" className="w-full bg-transparent border-b border-gray-700 p-2 outline-none focus:border-blue-500" />
                  {errors.members?.[index]?.college && <p className="text-red-500 text-xs">{errors.members[index]?.college?.message}</p>}
+              </div>
+
+              <div className="md:col-span-2">
+                 <input {...register(`members.${index}.rollNo`)} placeholder="Roll Number" className="w-full bg-transparent border-b border-gray-700 p-2 outline-none focus:border-blue-500" />
+                 {errors.members?.[index]?.rollNo && <p className="text-red-500 text-xs">{errors.members[index]?.rollNo?.message}</p>}
               </div>
 
                {/* Member Diet (Allergies Removed) */}
