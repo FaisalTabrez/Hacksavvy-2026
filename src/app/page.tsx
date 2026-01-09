@@ -1,8 +1,10 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 // Components
+import Preloader from '@/components/ui/Preloader'
 import FloatingNav from '@/components/landing/FloatingNav'
 import TracksGrid from '@/components/landing/TracksGrid'
 import PrizesBento from '@/components/landing/PrizesBento'
@@ -42,9 +44,26 @@ const SectionTitle = ({ children, id }: { children: React.ReactNode, id?: string
 )
 
 export default function Home() {
+  const [showPreloader, setShowPreloader] = useState(true);
+
+  useEffect(() => {
+    // Lock scroll when preloader is active
+    if (showPreloader) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [showPreloader]);
+
   return (
     <main className="min-h-screen text-white selection:bg-[#00f0ff]/30 pb-32 overflow-hidden">
       
+      <AnimatePresence>
+        {showPreloader && (
+          <Preloader onComplete={() => setShowPreloader(false)} />
+        )}
+      </AnimatePresence>
+
       <FloatingNav />
       
       {/* Background Layer: 3D Particles */}
