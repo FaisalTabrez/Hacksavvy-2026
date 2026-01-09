@@ -59,7 +59,7 @@ export default function RegistrationForm({ user }: { user: any }) {
     formState: { errors, isSubmitting },
     watch,
   } = useForm<RegistrationFormValues>({
-    resolver: zodResolver(registrationSchema),
+    resolver: zodResolver(registrationSchema) as any,
     defaultValues: {
       teamName: '',
       track: 'Open Innovation',
