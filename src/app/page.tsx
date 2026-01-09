@@ -12,6 +12,7 @@ import FaqAccordion from '@/components/landing/FaqAccordion'
 import Link from 'next/link'
 import About from '@/components/sections/About'
 import Guidelines from '@/components/sections/Guidelines'
+import MeetTheTeam from '@/components/sections/MeetTheTeam'
 
 // Dynamic import for Heavy 3D component with explicit loading state to prevent hydration mismatch
 const PulseSphereBackground = dynamic(() => import('@/components/PulseSphere'), { 
@@ -90,6 +91,9 @@ export default function Home() {
 
       {/* About Section */}
       <About />
+
+      {/* Meet The Team Section */}
+      <MeetTheTeam />
 
       {/* Tracks Section */}
       <section id="tracks" className="container mx-auto px-4 relative z-10">
