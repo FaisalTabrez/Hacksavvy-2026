@@ -144,7 +144,7 @@ export default function Guidelines() {
               </div>
               <div className="flex items-center gap-3 text-sm text-gray-300">
                 <CheckCircle2 className="w-5 h-5 text-purple-400" />
-                <span>Proof of payment screenshot (Rs. 1500)</span>
+                <span>Proof of payment screenshot (Rs. 1500) — details in the registration form</span>
               </div>
             </div>
           </div>
