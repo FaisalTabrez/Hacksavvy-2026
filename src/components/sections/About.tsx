@@ -62,7 +62,7 @@ export default function About() {
           <InfoCard 
             icon={<Calendar className="w-6 h-6 text-[#00f0ff]" />}
             title="Date & Duration"
-            content="13th - 14th February 2025"
+            content="12th - 13th February 2026"
             subContent="Thursday - Friday (24 Hours)"
             delay={0.2}
           />
