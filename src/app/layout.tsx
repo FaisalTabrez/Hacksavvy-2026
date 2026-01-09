@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono, Geist, Geist_Mono } from "next/font/google"; // Try consistent imports
 import { ClerkProvider } from '@clerk/nextjs'
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -57,6 +58,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased text-[#00f0ff] overflow-x-hidden selection:bg-[#00f0ff]/30`}
         >
           {children}
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>
