@@ -14,62 +14,70 @@ export async function registerTeam(formData: FormData) {
       return { success: false, error: 'Unauthorized' }
     }
 
-    const fullName = formData.get('fullName') as string
-    const email = user.primaryEmailAddress?.emailAddress
-    const teamName = formData.get('teamName') as string
-    const githubUrl = formData.get('githubUrl') as string
-    const bio = formData.get('bio') as string
-    const track = formData.get('track') as string
+    const rawData = formData.get('data')
     const screenshot = formData.get('screenshot') as File
 
-    if (!fullName || !email || !githubUrl) {
-      return { success: false, error: 'Missing required fields' }
+    if (!rawData || !screenshot) {
+      return { success: false, error: 'Missing data or screenshot' }
+    }
+
+    const data = JSON.parse(rawData as string)
+    // Structure: { teamName, track, projectTitle, abstract, leader, members, transactionId, accommodation }
+    
+    // Validate Team Size (Leader + Members) -> Min 2, Max 4
+    const teamSize = 1 + (data.members?.length || 0);
+    if (teamSize < 2 || teamSize > 4) {
+        return { success: false, error: 'Team size must be 2-4 members' }
     }
 
     let screenshotUrl = null
 
-    // 0. Upload Screenshot to Supabase Storage if provided
+    // 0. Upload Screenshot to Supabase Storage
     if (screenshot && screenshot.size > 0) {
       const fileExt = screenshot.name.split('.').pop()
-      const fileName = `${userId}-${Math.random()}.${fileExt}`
-      const filePath = `proofs/${fileName}`
+      const fileName = `teams/${userId}-${Date.now()}.${fileExt}` // Changed folder structure slightly
 
       const { error: uploadError } = await supabase.storage
         .from('payment_proofs')
-        .upload(filePath, screenshot)
+        .upload(fileName, screenshot) // Note: confirm bucket exists. 'payment_proofs' was used in old code.
 
       if (uploadError) {
         console.error('Upload Error:', uploadError)
-        // We continue anyway, but you might want to stop here strict
+        return { success: false, error: 'Screenshot upload failed' }
       } else {
         const { data: { publicUrl } } = supabase.storage
           .from('payment_proofs')
-          .getPublicUrl(filePath)
+          .getPublicUrl(fileName)
         screenshotUrl = publicUrl
       }
     }
 
-    // 1. Save to Supabase
+    // 1. Save to Supabase 'teams' table
+    const allMembers = [data.leader, ...data.members]; // Combine for easier storage/logic if needed, but schema asks for leader_id + members_data
+
     const { error: dbError } = await supabase
-      .from('registrations')
+      .from('teams')
       .insert({
-        user_id: userId,
-        email,
-        full_name: fullName,
-        team_name: teamName || null,
-        github_url: githubUrl,
-        bio: bio,
-        track: track,
+        leader_user_id: userId, // Auth ID
+        team_name: data.teamName,
+        track: data.track,
+        project_title: data.projectTitle,
+        abstract: data.abstract,
+        members_data: allMembers, // Store structured JSON of everyone
         payment_status: 'pending',
-        screenshot_url: screenshotUrl
+        payment_screenshot_url: screenshotUrl,
+        transaction_id: data.transactionId,
+        accommodation_needed: data.accommodation
       })
 
     if (dbError) {
       console.error('Supabase error:', dbError)
+      // Check for unique constraint on team_name
+      if (dbError.code === '23505') return { success: false, error: 'Team Name already exists' }
       return { success: false, error: 'Failed to save registration: ' + dbError.message }
     }
 
-    // 2. Send Email via Nodemailer
+    // 2. Send Emails via Nodemailer
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -78,23 +86,29 @@ export async function registerTeam(formData: FormData) {
       },
     })
 
-    await transporter.sendMail({
-      from: process.env.GMAIL_USER,
-      to: email,
-      subject: 'Application Received - Hacksavvy 2026',
-      html: `
-        <div style="font-family: sans-serif; color: #333;">
-          <h1>Application Received!</h1>
-          <p>Hi ${fullName},</p>
-          <p>Thanks for registering for Hacksavvy 2026. We've received your application.</p>
-          <p><strong>Team:</strong> ${teamName || 'N/A'}</p>
-          <p><strong>Track:</strong> ${track}</p>
-          <br/>
-          <p>See you there!</p>
-          <p>The Hacksavvy Team</p>
-        </div>
-      `,
+    // Send to ALL members
+    const emailPromises = allMembers.map((member: any) => {
+        return transporter.sendMail({
+            from: process.env.GMAIL_USER,
+            to: member.email,
+            subject: 'Registration Confirmed - Hacksavvy 2026',
+            html: `
+            <div style="font-family: sans-serif; color: #333;">
+                <h1>Welcome to Hacksavvy 2026!</h1>
+                <p>Hi ${member.name},</p>
+                <p>Your team <strong>${data.teamName}</strong> has been successfully registered.</p>
+                <p><strong>Project:</strong> ${data.projectTitle}</p>
+                <p><strong>Track:</strong> ${data.track}</p>
+                <p><strong>Status:</strong> Payment Pending Verification</p>
+                <br/>
+                <p>We will notify you once your payment is verified.</p>
+                <p>The Hacksavvy Team</p>
+            </div>
+            `,
+        })
     })
+
+    await Promise.allSettled(emailPromises)
 
     return { success: true }
   } catch (error) {
