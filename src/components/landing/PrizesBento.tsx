@@ -42,8 +42,8 @@ export default function PrizesBento() {
           <Award size={32} />
         </div>
         <div>
-            <h4 className="text-xl font-bold mb-1">Blockchain Certificate</h4>
-            <p className="text-gray-400 text-sm">Verifiable NFT certificates for every submitter.</p>
+          <h4 className="text-xl font-bold mb-1">Participation Certificate</h4>
+          <p className="text-gray-400 text-sm">Participation certificates for every submitter.</p>
         </div>
       </motion.div>
 
