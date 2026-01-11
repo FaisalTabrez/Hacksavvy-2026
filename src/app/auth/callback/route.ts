@@ -1,20 +1,26 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
+import { ADMIN_EMAILS } from '@/lib/constants'
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  // if "next" is in param, use it as the redirect URL
-  const next = searchParams.get('next') ?? '/dashboard'
 
   if (code) {
     const supabase = await createClient()
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
-    if (!error) {
-      const forwardedHost = request.headers.get('x-forwarded-host') // original origin before load balancer
+    const { data: { session }, error } = await supabase.auth.exchangeCodeForSession(code)
+    
+    if (!error && session?.user?.email) {
+      // Intelligent Routing based on Roles
+      let next = '/dashboard'
+      if (ADMIN_EMAILS.includes(session.user.email)) {
+        next = '/admin/dashboard'
+      }
+
+      const forwardedHost = request.headers.get('x-forwarded-host') 
       const isLocalEnv = process.env.NODE_ENV === 'development'
+      
       if (isLocalEnv) {
-        // we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
         return NextResponse.redirect(`${origin}${next}`)
       } else if (forwardedHost) {
         return NextResponse.redirect(`https://${forwardedHost}${next}`)
@@ -25,5 +31,7 @@ export async function GET(request: Request) {
   }
 
   // return the user to an error page with instructions
+  return NextResponse.redirect(`${origin}/login?error=AuthFailed`)
+}
   return NextResponse.redirect(`${origin}/login?error=Invalid%20auth%20code`)
 }

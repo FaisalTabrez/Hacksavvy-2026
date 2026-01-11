@@ -49,9 +49,28 @@ export default function CommandCenter({ teams: initialTeams }: { teams: Team[] }
   }
 
   const handleReject = async (team: Team) => {
-     if(!confirm(`Reject team "${team.team_name}"?`)) return;
-     // logic...
-     alert("Reject logic implemented in actions but simplified here.")
+     if(!confirm(`Reject team "${team.team_name}"? This will notify them to re-upload.`)) return;
+      
+     setProcessing(team.id)
+     try {
+       const leader = team.members_data?.find((m: any) => m.role === 'leader') || team.members_data?.[0]
+       
+       const res = await rejectPayment(
+           team.id,
+           leader?.email || "unknown@example.com",
+           leader?.name || "Hacker",
+           "Payment screenshot was unclear or transaction ID could not be verified." 
+       )
+ 
+       if (res.success) {
+         setTeams(teams.filter(t => t.id !== team.id))
+         setSelectedTeam(null)
+       } else {
+         alert("Error rejecting: " + res.error)
+       }
+     } finally {
+       setProcessing(null)
+     }
   }
 
   return (
