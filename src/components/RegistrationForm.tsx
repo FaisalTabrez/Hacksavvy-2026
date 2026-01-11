@@ -67,8 +67,8 @@ export default function RegistrationForm({ user, initialData }: { user: any, ini
       teamName: '',
       track: 'Open Innovation',
       leader: {
-        name: user?.fullName || '',
-        email: user?.primaryEmailAddress?.emailAddress || '',
+        name: user?.user_metadata?.full_name || user?.user_metadata?.name || '',
+        email: user?.email || '',
         phone: '',
         college: '',
         rollNo: '',

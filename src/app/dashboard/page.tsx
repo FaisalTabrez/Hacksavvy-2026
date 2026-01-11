@@ -1,5 +1,5 @@
 import { getUserState } from '@/lib/data'
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@/utils/supabase/server'
 import RegistrationForm from '@/components/RegistrationForm' // Need to update this to handle optional create/edit prop
 import CommandCenter from '@/components/dashboard/CommandCenter'
 import { Clock, Ticket, CheckCircle2, ShieldAlert } from 'lucide-react'
@@ -14,6 +14,7 @@ export default async function DashboardPage() {
 
   // --- STATE D: ADMIN MODE ---
   if (isAdmin) {
+    const supabase = await createClient()
     // Fetch pending teams for admin
     const { data: pendingTeams } = await supabase
        .from('teams')

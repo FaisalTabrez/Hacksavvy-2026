@@ -1,20 +1,21 @@
 'use server'
 
-import { auth, currentUser } from '@clerk/nextjs/server'
+import { createClient as createServerClient } from '@/utils/supabase/server'
 import { createClient } from '@supabase/supabase-js'
 import nodemailer from 'nodemailer'
 import { revalidatePath } from 'next/cache'
 
 // Hardcoded admin email (as requested)
-// In a real app, use Clerk public metadata or roles
+// In a real app, use public metadata or roles
 const ADMIN_EMAILS = ['faisaltabrez01@gmail.com'] // Replace with your actual email if different
 
 export async function verifyPayment(registrationId: string) {
   try {
-    const user = await currentUser()
+    const supabase = await createServerClient()
+    const { data: { user } } = await supabase.auth.getUser()
     
     // Security Check
-    if (!user || !user.primaryEmailAddress || !ADMIN_EMAILS.includes(user.primaryEmailAddress.emailAddress)) {
+    if (!user || !user.email || !ADMIN_EMAILS.includes(user.email)) {
       return { success: false, error: 'Unauthorized: Admin access required' }
     }
 

@@ -1,18 +1,18 @@
 'use server'
 
-import { auth, currentUser } from '@clerk/nextjs/server'
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@/utils/supabase/server'
 import nodemailer from 'nodemailer'
 
 // Server Action to handle registration
 export async function registerTeam(formData: FormData) {
   try {
-    const { userId } = await auth()
-    const user = await currentUser()
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
 
-    if (!userId || !user) {
+    if (!user) {
       return { success: false, error: 'Unauthorized' }
     }
+    const userId = user.id
 
     const rawData = formData.get('data')
     const screenshot = formData.get('screenshot') as File

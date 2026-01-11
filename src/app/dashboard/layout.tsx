@@ -13,12 +13,18 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { SignOutButton, UserButton } from '@clerk/nextjs'
+import { createClient } from '@/utils/supabase/client'
 import { NAV_ITEMS, ADMIN_EMAILS } from '@/lib/constants'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const pathname = usePathname()
+  const [supabase] = useState(() => createClient())
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut()
+    window.location.href = '/login'
+  }
 
   // Note: We can't easily check admin status here without props or async calls, 
   // but the Command Center link is protected by page logic mostly.
@@ -57,13 +63,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </nav>
 
         <div className="p-4 border-t border-white/10">
-          <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/5 hover:border-white/20 transition">
-             <UserButton />
-             <div className="flex-1 overflow-hidden">
-                <p className="text-sm font-medium truncate text-white">My Account</p>
-                <p className="text-xs text-gray-500 truncate">Manage Profile</p>
+          <button onClick={handleSignOut} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/5 hover:border-red-500/50 hover:bg-red-500/10 transition group cursor-pointer">
+             <LogOut className="w-5 h-5 text-gray-400 group-hover:text-red-400" />
+             <div className="flex-1 text-left">
+                <p className="text-sm font-medium text-white group-hover:text-red-300">Sign Out</p>
              </div>
-          </div>
+          </button>
         </div>
       </aside>
 
@@ -99,7 +104,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                </Link>
             ))}
             <div className="pt-8">
-                <UserButton showName />
+                <button onClick={handleSignOut} className="flex items-center gap-3 text-red-400 font-bold w-full py-4 border-b border-white/10">
+                    <LogOut className="w-5 h-5" /> Sign Out
+                </button>
             </div>
         </div>
       )}
@@ -116,3 +123,4 @@ function getIcon(name: string) {
         default: return Code2;
     }
 }
+

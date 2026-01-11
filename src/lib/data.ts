@@ -1,35 +1,29 @@
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { createClient } from '@/utils/supabase/server';
 import { supabase } from '@/lib/supabase';
 import { ADMIN_EMAILS } from '@/lib/constants';
 
 export async function getUserState() {
-  const { userId } = await auth();
-  const user = await currentUser();
+  const authClient = await createClient();
+  const { data: { user } } = await authClient.auth.getUser();
 
-  if (!userId || !user) {
+  if (!user) {
     return {
       isAuthenticated: false,
       user: null,
       team: null,
       isAdmin: false,
-      state: 'GUEST' as const, // GUEST
+      state: 'GUEST' as const,
     };
   }
 
-  const email = user.primaryEmailAddress?.emailAddress || '';
+  const email = user.email || '';
   const isAdmin = ADMIN_EMAILS.includes(email);
 
   // Fetch team registration where the user is the leader OR a member
-  // Note: Current schema only stores 'leader_user_id'. 
-  // If we want to find members, we'd need to parse the JSONB or have a separate junction table.
-  // For now, assuming the user viewing the dashboard is the Leader who registered.
-  // If need to support members viewing, we would check 'members_data' using JSON containment or similar.
-  // Simplified for this task: Check if user is a leader.
-  
   const { data: team, error } = await supabase
     .from('teams')
     .select('*')
-    .eq('leader_user_id', userId)
+    .eq('leader_user_id', user.id)
     .single();
 
   // Determine State

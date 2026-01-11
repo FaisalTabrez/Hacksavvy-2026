@@ -1,4 +1,4 @@
-import { currentUser } from '@clerk/nextjs/server'
+import { createClient as createServerClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js' // Import createClient directly
 import VerifyButton from './VerifyButton'
@@ -8,10 +8,11 @@ import Link from 'next/link'
 const ADMIN_EMAILS = ['faisaltabrez01@gmail.com']
 
 export default async function AdminPage() {
-  const user = await currentUser()
+  const supabase = await createServerClient()
+  const { data: { user } } = await supabase.auth.getUser()
 
   // 1. Security Check
-  if (!user || !user.primaryEmailAddress || !ADMIN_EMAILS.includes(user.primaryEmailAddress.emailAddress)) {
+  if (!user || !user.email || !ADMIN_EMAILS.includes(user.email)) {
     redirect('/')
   }
 

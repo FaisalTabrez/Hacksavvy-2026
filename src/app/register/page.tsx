@@ -1,27 +1,37 @@
 'use client'
 
-import { useUser, SignInButton } from '@clerk/nextjs'
+import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import RegistrationForm from '@/components/RegistrationForm'
+import { useEffect, useState } from 'react'
 
 export default function RegisterPage() {
-  const { isLoaded, isSignedIn, user } = useUser()
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
   const router = useRouter()
+  const [supabase] = useState(() => createClient())
 
-  if (!isLoaded) {
+  useEffect(() => {
+    const getUser = async () => {
+         const { data: { user } } = await supabase.auth.getUser()
+         setUser(user)
+         setLoading(false)
+    }
+    getUser()
+  }, [supabase])
+
+  if (loading) {
     return <div className="min-h-screen flex items-center justify-center text-[#00f0ff]">Loading...</div>
   }
 
-  if (!isSignedIn) {
+  if (!user) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4 text-center bg-black/90">
         <h1 className="text-2xl font-bold mb-4 text-white">Sign in Required</h1>
         <p className="mb-6 text-gray-400">Please sign in to register for Hacksavvy 2026.</p>
-        <SignInButton mode="modal">
-          <button className="px-8 py-3 bg-[#00f0ff] text-black rounded-full font-bold hover:bg-[#00c0cc] transition-colors">
-            Sign In with Google/GitHub
-          </button>
-        </SignInButton>
+        <button onClick={() => router.push('/login')} className="px-8 py-3 bg-[#00f0ff] text-black rounded-full font-bold hover:bg-[#00c0cc] transition-colors">
+            Sign In with Google
+        </button>
       </div>
     )
   }
