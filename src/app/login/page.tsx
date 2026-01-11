@@ -43,7 +43,7 @@ export default function LoginPage() {
           providers={['google']}
           onlyThirdPartyProviders={true}
           theme="dark"
-          redirectTo={`${window.location.origin}/auth/callback`}
+          redirectTo={typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : ''}
         />
       </div>
     </div>
