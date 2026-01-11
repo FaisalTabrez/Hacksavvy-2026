@@ -51,7 +51,7 @@ export default async function AdminPage() {
             Admin Dashboard
           </h1>
           <div className="text-gray-400">
-            Welcome, {user.firstName}
+            Welcome, {user.user_metadata?.full_name || user.email}
           </div>
         </div>
 
