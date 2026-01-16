@@ -7,7 +7,7 @@ import Preloader from '@/components/ui/Preloader'
 import Header from '@/components/layout/Header'
 import Hero from '@/components/landing/Hero'
 import TracksGrid from '@/components/landing/TracksGrid'
-import PrizesBento from '@/components/landing/PrizesBento'
+import Prizes from '@/components/sections/Prizes'
 import Timeline from '@/components/sections/Timeline'
 import SponsorsMarquee from '@/components/landing/SponsorsMarquee'
 import FaqAccordion from '@/components/landing/FaqAccordion'
@@ -68,9 +68,8 @@ export default function Home() {
           <TracksGrid />
         </div>
 
-        <div id="prizes" className="container mx-auto px-4">
-           <SectionTitle>PRIZE POOL</SectionTitle>
-           <PrizesBento />
+        <div id="prizes">
+           <Prizes />
         </div>
 
         <div id="timeline" className="container mx-auto px-4">

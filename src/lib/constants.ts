@@ -18,12 +18,11 @@ export const FACULTY_LEADERS = [
 ];
 
 export const TRACKS_THEMES = [
-  { title: 'Generative AI', image: '/theme/ai.jpg', description: 'Harness the power of LLMs and Diffusion models.' },
-  { title: 'Cyber Security', image: '/theme/cyber.jpg', description: 'Defend the digital frontier.' },
-  { title: 'IoT & Smart Cities', image: '/theme/iot.jpg', description: 'Connect the physical and digital worlds.' },
-  { title: 'Web3 & Blockchain', image: '/theme/blockchain.jpg', description: 'Decentralize the future.' },
-  { title: 'Robotics', image: '/theme/robotics.jpg', description: 'Build intelligent machines.' },
-  { title: 'Open Innovation', image: '/theme/open.jpg', description: 'Solve any problem that matters.' },
+  { title: 'AI, Automation, Robotics & Drone Technology', image: '/theme/ai.jpg', description: 'Building intelligent systems and autonomous agents for the future.' },
+  { title: 'Cybersecurity & Blockchain', image: '/theme/security.jpg', description: 'Securing the digital frontier and decentralized networks.' },
+  { title: 'IoT, VLSI & Embedded Systems', image: '/theme/iot.jpg', description: 'Connecting the physical world with smart embedded solutions.' },
+  { title: 'Sustainability & Environment', image: '/theme/sustainable.jpg', description: 'Tech solutions for a greener, cleaner planet.' },
+  { title: 'Open Innovation', image: '/theme/open.jpg', description: 'Solving real-world problems with limitless creativity.' },
 ];
 
 export const STUDENT_COORDINATORS = [

@@ -36,17 +36,13 @@ export default function Hero() {
           </span>
 
           {/* Main Title */}
-          <h1 className="text-6xl md:text-9xl font-black font-heading tracking-tighter text-white mb-6 leading-none">
+          <h1 className="text-5xl md:text-8xl font-black font-heading tracking-tighter text-white mb-6 leading-none whitespace-nowrap">
             HACK<span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-red to-deep-crimson drop-shadow-[0_0_20px_rgba(220,38,38,0.5)]">SAVVY</span>
-            <br />
-            <span className="text-4xl md:text-8xl text-white/10 absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-150 blur-sm select-none">
-              -26
-            </span>
-            <span className="text-white text-5xl md:text-8xl">-26</span>
+            <span className="text-white">-26</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl font-light text-gray-300 max-w-2xl mx-auto mb-10 font-sans leading-relaxed">
+          <p className="text-xl md:text-2xl font-light text-gray-300 max-w-2xl mx-auto mb-10 mt-10 font-sans leading-relaxed">
             <span className="text-neon-red font-bold">Ideate. Innovate. Inspire.</span> <br/>
             Step into the void and build the future of technology.
           </p>

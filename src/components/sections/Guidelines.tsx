@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { 
   Users, 
   IndianRupee, 
@@ -10,7 +11,8 @@ import {
   Coffee, 
   Gavel, 
   Trophy,
-  CheckCircle2
+  CheckCircle2,
+  ArrowRight
 } from 'lucide-react';
 
 const guidelines = [
@@ -21,7 +23,7 @@ const guidelines = [
   },
   {
     title: "Registration Fee",
-    description: "Rs. 1500 per team (Non-refundable). Payment details provided upon registration.",
+    description: "Rs. 2500 per team (Non-refundable). Payment details provided upon registration.",
     icon: IndianRupee
   },
   {
@@ -73,22 +75,16 @@ const item = {
 
 export default function Guidelines() {
   return (
-    <section className="relative py-24 px-4 sm:px-6 lg:px-8 z-10 w-full max-w-7xl mx-auto">
-      <div className="text-center mb-16">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-5xl font-bold font-space-grotesk text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 mb-4"
-        >
-          GUIDELINES
-        </motion.h2>
+    <section className="relative py-10 px-4 z-10 w-full max-w-7xl mx-auto">
+      <div className="text-center mb-16 space-y-2">
+        {/* Simple Header */}
         <motion.p 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-cyan-400/80 tracking-widest text-sm uppercase font-mono"
+          className="text-neon-red tracking-[0.3em] text-sm font-bold font-mono"
         >
-          Ideate. Innovate. Inspire.
+          IDEATE. INNOVATE. INSPIRE.
         </motion.p>
       </div>
 
@@ -99,61 +95,60 @@ export default function Guidelines() {
         viewport={{ once: true }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
       >
-        {guidelines.map((rule, index) => (
+        {guidelines.map((guide, idx) => (
           <motion.div
-            key={index}
+            key={idx}
             variants={item}
-            className="group relative bg-white/5 border border-white/10 p-6 rounded-2xl backdrop-blur-md hover:border-purple-500/50 transition-all duration-300 hover:bg-white/[0.07]"
+            className="group relative p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-neon-red/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,42,42,0.15)] flex flex-col items-start gap-4"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-cyan-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="p-3 rounded-xl bg-neon-red/10 group-hover:bg-neon-red group-hover:text-white text-neon-red transition-all duration-300">
+              <guide.icon size={24} />
+            </div>
             
-            <div className="relative z-10">
-              <div className="p-3 bg-white/5 w-fit rounded-xl mb-4 text-cyan-400 group-hover:text-purple-400 group-hover:bg-purple-500/10 transition-colors">
-                <rule.icon className="w-6 h-6" />
-              </div>
-              
-              <h3 className="text-xl font-bold font-space-grotesk text-white mb-2 group-hover:text-cyan-400 transition-colors">
-                {rule.title}
+            <div>
+              <h3 className="text-xl font-bold font-heading text-white mb-2 group-hover:text-neon-red transition-colors">
+                {guide.title}
               </h3>
-              
-              <p className="text-gray-400 text-sm leading-relaxed font-geist">
-                {rule.description}
+              <p className="text-gray-400 text-sm leading-relaxed">
+                {guide.description}
               </p>
             </div>
           </motion.div>
         ))}
       </motion.div>
 
+      {/* Ready to Register CTA */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-cyan-900/10 to-purple-900/10 border border-dashed border-cyan-500/30 backdrop-blur-xl p-8 md:p-12"
+        className="relative overflow-hidden rounded-2xl bg-red-950/10 border border-dashed border-red-500/30 backdrop-blur-xl p-8"
       >
-        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <div>
-            <h3 className="text-2xl font-bold text-white font-space-grotesk mb-2">
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="text-left w-full md:w-auto">
+            <h3 className="text-2xl font-bold text-white font-heading mb-2">
               Ready to Register?
             </h3>
-            <p className="text-gray-400 mb-6">Please ensure you have the following ready:</p>
+            <p className="text-gray-400 mb-6">Ensure you have the following:</p>
             
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
               <div className="flex items-center gap-3 text-sm text-gray-300">
-                <CheckCircle2 className="w-5 h-5 text-cyan-400" />
+                <CheckCircle2 className="w-5 h-5 text-neon-red" />
                 <span>Team details (names, emails, IDs)</span>
               </div>
               <div className="flex items-center gap-3 text-sm text-gray-300">
-                <CheckCircle2 className="w-5 h-5 text-purple-400" />
-                <span>Proof of payment screenshot (Rs. 1500) — details in the registration form</span>
+                <CheckCircle2 className="w-5 h-5 text-neon-red" />
+                <span>Payment Screenshot (₹2500 per team)</span>
               </div>
             </div>
           </div>
-
-          <div className="w-full md:w-auto">
-            <button className="w-full md:w-auto px-8 py-4 bg-white text-black font-bold font-space-grotesk hover:bg-cyan-400 transition-colors rounded-xl">
-              REGISTER NOW
-            </button>
-          </div>
+          
+          <Link 
+            href="/login" 
+            className="group whitespace-nowrap px-8 py-3 bg-red-600 hover:bg-red-500 text-white font-bold rounded-full transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(220,38,38,0.4)] hover:shadow-[0_0_25px_rgba(220,38,38,0.6)]"
+          >
+            Register Now <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </motion.div>
     </section>

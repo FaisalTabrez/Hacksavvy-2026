@@ -8,8 +8,8 @@ import { Calendar, MapPin } from 'lucide-react'
 // deep-crimson: #991b1b
 
 const themes = [
-  "AI", "Cybersecurity", "IoT", "Machine Learning", 
-  "Blockchain", "Drone Tech", "Robotics", "Sustainable Infrastructure"
+  "AI & Robotics", "Cybersecurity & Blockchain", 
+  "IoT & VLSI", "Sustainability", "Open Innovation"
 ]
 
 export default function About() {
@@ -32,7 +32,7 @@ export default function About() {
             <p className="text-lg text-gray-300 leading-relaxed font-light">
               Join us at HackSavvy, exclusively hosted by the <strong className="text-white font-medium">Mahatma Gandhi Institute of Technology (MGIT)</strong>, 
               for a premier national-level 24-hour hackathon. This event is dedicated to students passionate about 
-              advancing the frontiers of innovation.
+              advancing the frontiers of innovation. Exploring cutting-edge domains including AI & Robotics, Cybersec, IoT, and Sustainability.
             </p>
           </div>
 
