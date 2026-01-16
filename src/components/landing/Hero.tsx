@@ -63,7 +63,7 @@ export default function Hero() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
             <Link 
-              href="/register"
+              href="/login"
               className="group relative px-8 py-4 bg-neon-red text-white font-bold rounded-xl overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,42,42,0.5)]"
             >
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />

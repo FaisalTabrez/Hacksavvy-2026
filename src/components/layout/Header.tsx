@@ -68,7 +68,7 @@ export default function Header() {
           ))}
           
           <Link 
-            href="/register"
+            href="/login"
             className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-neon-red to-deep-crimson text-white rounded-full text-sm font-bold hover:shadow-[0_0_20px_rgba(255,42,42,0.4)] transition-all border border-red-500/50"
           >
             <Ticket size={16} />
@@ -99,7 +99,7 @@ export default function Header() {
             </Link>
           ))}
            <Link 
-            href="/register"
+            href="/login"
             onClick={() => setMobileMenuOpen(false)}
             className="flex items-center justify-center gap-2 px-6 py-3 bg-neon-red text-white rounded-lg font-bold"
           >
