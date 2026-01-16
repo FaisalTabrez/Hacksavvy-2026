@@ -11,7 +11,7 @@ import TracksGrid from '@/components/landing/TracksGrid'
 import Prizes from '@/components/sections/Prizes'
 import Timeline from '@/components/sections/Timeline'
 import SponsorsMarquee from '@/components/landing/SponsorsMarquee'
-import FaqAccordion from '@/components/landing/FaqAccordion'
+import FAQ from '@/components/sections/FAQ'
 import About from '@/components/sections/About'
 import Guidelines from '@/components/sections/Guidelines'
 import MeetTheTeam from '@/components/sections/MeetTheTeam'
@@ -93,9 +93,9 @@ export default function Home() {
           <SponsorsMarquee />
         </div>
 
-        <div className="container mx-auto px-4 max-w-3xl">
-          <SectionTitle>FAQ</SectionTitle>
-          <FaqAccordion />
+        <div className="container mx-auto px-4 max-w-6xl">
+          <SectionTitle>COMMUNITY</SectionTitle>
+          <FAQ />
         </div>
 
       </div>
