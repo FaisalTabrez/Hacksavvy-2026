@@ -4,10 +4,14 @@
   --font-sans: var(--font-sans);
   --font-heading: var(--font-heading);
   --font-mono: var(--font-mono);
+  
+  --color-neon-red: #ff2a2a;
+  --color-deep-crimson: #991b1b;
+  --color-liquid-black: #050505;
 }
 
 :root {
-  --background: #0a0a0a;
+  --background: #050505;
   --foreground: #ffffff;
 }
 

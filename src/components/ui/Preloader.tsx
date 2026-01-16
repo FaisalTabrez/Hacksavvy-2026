@@ -62,7 +62,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
            exit={{ opacity: 0 }}
         >
             {/* Ambient Background Gradient */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,240,255,0.1)_0%,rgba(5,5,5,1)_60%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,42,42,0.1)_0%,rgba(5,5,5,1)_60%)] pointer-events-none" />
 
             {/* --- Battery Indicator --- */}
             <motion.div 
@@ -74,10 +74,10 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                 
                 {/* Liquid Fill */}
                 <motion.div 
-                   className="h-full rounded bg-gradient-to-r from-red-500 via-purple-500 to-[#00f0ff]"
+                   className="h-full rounded bg-gradient-to-r from-red-800 via-red-600 to-neon-red"
                    style={{ width: `${batteryLevel}%` }}
                    animate={{
-                     filter: batteryLevel > 80 ? "drop-shadow(0 0 10px #00f0ff)" : "none"
+                     filter: batteryLevel > 80 ? "drop-shadow(0 0 10px #ff2a2a)" : "none"
                    }}
                 />
                 
@@ -102,7 +102,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                         className={`absolute -top-3 w-6 h-6 rounded-full shadow-[0_0_15px] ${
                             phase === 'charging' 
                                 ? 'bg-red-500 shadow-red-500' 
-                                : 'bg-[#00f0ff] shadow-[#00f0ff]'
+                                : 'bg-neon-red shadow-neon-red'
                         }`}
                         animate={phase === 'charging' ? { opacity: [0.4, 1, 0.4] } : { opacity: 1 }}
                         transition={{ repeat: Infinity, duration: 1 }}
@@ -110,7 +110,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                 </div>
 
                 {/* Head */}
-                <div className="w-56 h-44 bg-[#0a0a0a] border-2 border-[#00f0ff] rounded-3xl relative z-20 flex items-center justify-center shadow-[0_0_30px_rgba(0,240,255,0.15)] overflow-hidden">
+                <div className="w-56 h-44 bg-[#0a0a0a] border-2 border-neon-red rounded-3xl relative z-20 flex items-center justify-center shadow-[0_0_30px_rgba(255,42,42,0.15)] overflow-hidden">
                     {/* Screen Scanlines */}
                     <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none opacity-50" />
                     
@@ -120,13 +120,13 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                         <motion.div className="w-10 h-10 flex items-center justify-center">
                            {phase === 'charging' ? (
                                <motion.div 
-                                 className="w-8 h-1.5 bg-[#00f0ff] rounded-full shadow-[0_0_8px_#00f0ff]"
+                                 className="w-8 h-1.5 bg-neon-red rounded-full shadow-[0_0_8px_#ff2a2a]"
                                  animate={{ opacity: [0.5, 1, 0.5] }}
                                  transition={{ repeat: Infinity, duration: 1.5 }}
                                />
                            ) : (
                                <motion.div 
-                                 className="w-8 h-8 border-4 border-[#00f0ff] rounded-full shadow-[0_0_10px_#00f0ff]"
+                                 className="w-8 h-8 border-4 border-neon-red rounded-full shadow-[0_0_10px_#ff2a2a]"
                                  initial={{ scale: 0 }}
                                  animate={{ scale: 1 }}
                                />
@@ -137,13 +137,13 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                         <motion.div className="w-10 h-10 flex items-center justify-center">
                            {phase === 'charging' ? (
                                <motion.div 
-                                 className="w-8 h-1.5 bg-[#00f0ff] rounded-full shadow-[0_0_8px_#00f0ff]"
+                                 className="w-8 h-1.5 bg-neon-red rounded-full shadow-[0_0_8px_#ff2a2a]"
                                  animate={{ opacity: [0.5, 1, 0.5] }}
                                  transition={{ repeat: Infinity, duration: 1.5 }}
                                />
                            ) : (
                                <motion.div 
-                                 className="w-8 h-8 border-4 border-[#00f0ff] rounded-full shadow-[0_0_10px_#00f0ff]"
+                                 className="w-8 h-8 border-4 border-neon-red rounded-full shadow-[0_0_10px_#ff2a2a]"
                                  initial={{ scale: 0 }}
                                  animate={{ scale: 1 }}
                                />
@@ -152,7 +152,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                     </div>
 
                     {/* Mouth Line (Optional visual detail) */}
-                    <div className="absolute bottom-8 w-16 h-1 bg-[#00f0ff]/20 rounded-full" />
+                    <div className="absolute bottom-8 w-16 h-1 bg-neon-red/20 rounded-full" />
                 </div>
 
                 {/* Neck */}
@@ -161,17 +161,17 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                 {/* Body */}
                 <div className="w-48 h-32 bg-gray-900 rounded-b-[3rem] rounded-t-xl z-10 border border-white/5 relative flex justify-center pt-6 shadow-lg">
                      {/* Chest Piece */}
-                     <div className="w-24 h-16 border border-[#00f0ff]/30 rounded-lg bg-black/50 flex flex-col items-center justify-center gap-1">
-                        <div className="w-16 h-1 bg-[#00f0ff]/20 rounded-full" />
-                        <div className="w-16 h-1 bg-[#00f0ff]/20 rounded-full" />
-                        <div className="w-16 h-1 bg-[#00f0ff]/20 rounded-full" />
+                     <div className="w-24 h-16 border border-neon-red/30 rounded-lg bg-black/50 flex flex-col items-center justify-center gap-1">
+                        <div className="w-16 h-1 bg-neon-red/20 rounded-full" />
+                        <div className="w-16 h-1 bg-neon-red/20 rounded-full" />
+                        <div className="w-16 h-1 bg-neon-red/20 rounded-full" />
                      </div>
                 </div>
 
                 {/* --- Shockwave Effect (Phase 2) --- */}
                 {phase === 'awake' && (
                     <motion.div
-                       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border-2 border-[#00f0ff]"
+                       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border-2 border-neon-red"
                        initial={{ scale: 0.5, opacity: 1 }}
                        animate={{ scale: 2.5, opacity: 0 }}
                        transition={{ duration: 0.6, ease: "easeOut" }}
@@ -181,7 +181,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
             
             {/* Loading Text */}
             <motion.p
-              className="mt-8 font-mono text-[#00f0ff]/50 text-sm tracking-[0.2em] animate-pulse"
+              className="mt-8 font-mono text-neon-red/50 text-sm tracking-[0.2em] animate-pulse"
               animate={phase === 'dash' ? { opacity: 0 } : {}}
             >
                 SYSTEM_BOOT_SEQUENCE<span className="text-white">_INIT</span>

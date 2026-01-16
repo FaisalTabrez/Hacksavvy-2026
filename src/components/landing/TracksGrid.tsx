@@ -1,65 +1,45 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Brain, Globe, Cpu, Lightbulb } from 'lucide-react'
-
-const tracks = [
-  {
-    title: "AI & Machine Learning",
-    description: "Build the next generation of intelligent systems.",
-    icon: <Brain className="w-8 h-8 text-[#00f0ff]" />,
-    gradient: "from-[#00f0ff]/20 to-transparent"
-  },
-  {
-    title: "Web3 & Blockchain",
-    description: "Decentralized applications and smart contracts.",
-    icon: <Globe className="w-8 h-8 text-[#7c3aed]" />,
-    gradient: "from-[#7c3aed]/20 to-transparent"
-  },
-  {
-    title: "Internet of Things",
-    description: "Connect the physical world with the digital.",
-    icon: <Cpu className="w-8 h-8 text-[#00f0ff]" />,
-    gradient: "from-[#00f0ff]/20 to-transparent"
-  },
-  {
-    title: "Open Innovation",
-    description: "Solve problems that matter to you.",
-    icon: <Lightbulb className="w-8 h-8 text-[#7c3aed]" />,
-    gradient: "from-[#7c3aed]/20 to-transparent"
-  }
-]
+import Image from 'next/image'
+import { TRACKS_THEMES } from '@/lib/constants'
 
 export default function TracksGrid() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
-      {tracks.map((track, index) => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+      {TRACKS_THEMES.map((track, index) => (
         <motion.div
           key={track.title}
           whileHover={{ y: -10 }}
           className={`
             relative p-6 rounded-2xl 
             bg-white/5 backdrop-blur-lg border border-white/10
-            overflow-hidden group
+            overflow-hidden group h-64 flex flex-col justify-end
           `}
         >
-          {/* Gradient Overlay */}
-          <div className={`absolute inset-0 bg-gradient-to-br ${track.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+          {/* Background Image (Darkened) */}
+          <div className="absolute inset-0 z-0">
+             {/* Note: In a real app, use the actual image path. Using placeholder logic if invalid */}
+             <div className="absolute inset-0 bg-black/60 group-hover:bg-black/40 transition-colors z-10" />
+             <Image 
+               src={track.image} 
+               alt={track.title}
+               fill
+               className="object-cover opacity-50 group-hover:scale-110 transition-transform duration-500"
+             />
+          </div>
           
-          {/* Glowing Border Effect */}
-          <div className="absolute inset-0 rounded-2xl ring-1 ring-white/10 group-hover:ring-[#00f0ff]/50 transition-all duration-300" />
-
-          <div className="relative z-10 flex flex-col items-start gap-4">
-            <div className="p-3 rounded-xl bg-black/50 border border-white/5">
-              {track.icon}
-            </div>
-            
-            <div>
-              <h3 className="text-xl font-bold font-heading mb-2">{track.title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                {track.description}
-              </p>
-            </div>
+          {/* Red Glow Border */}
+          <div className="absolute inset-0 rounded-2xl ring-1 ring-white/10 group-hover:ring-neon-red/50 transition-all duration-300 z-20 pointer-events-none" />
+          
+          {/* Content */}
+          <div className="relative z-20">
+             <h3 className="text-2xl font-bold font-heading mb-2 text-white group-hover:text-neon-red transition-colors">
+                 {track.title}
+             </h3>
+             <p className="text-gray-300 text-sm line-clamp-2">
+                 {track.description}
+             </p>
           </div>
         </motion.div>
       ))}

@@ -1,33 +1,20 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
 import { motion, AnimatePresence } from 'framer-motion'
 // Components
 import Preloader from '@/components/ui/Preloader'
-import FloatingNav from '@/components/landing/FloatingNav'
+import Header from '@/components/layout/Header'
+import Hero from '@/components/landing/Hero'
 import TracksGrid from '@/components/landing/TracksGrid'
 import PrizesBento from '@/components/landing/PrizesBento'
 import Timeline from '@/components/landing/Timeline'
 import SponsorsMarquee from '@/components/landing/SponsorsMarquee'
 import FaqAccordion from '@/components/landing/FaqAccordion'
-import Link from 'next/link'
 import About from '@/components/sections/About'
 import Guidelines from '@/components/sections/Guidelines'
 import MeetTheTeam from '@/components/sections/MeetTheTeam'
-
-// Dynamic import for Heavy 3D component with explicit loading state to prevent hydration mismatch
-const PulseSphereBackground = dynamic(() => import('@/components/PulseSphere'), { 
-  ssr: false,
-  loading: () => <div className="fixed inset-0 bg-[#0a0a0a] z-0" /> 
-})
-
-// Dynamic import for Fluid Distortion (Client-side only)
-const FluidLayer = dynamic(() => import('@/components/backgrounds/FluidLayer'), {
-  ssr: false,
-  // Make it fully transparent or absent while loading to avoid flash
-  loading: () => <div className="absolute inset-0 z-10 pointer-events-none" />
-})
+import Link from 'next/link'
 
 const SectionTitle = ({ children, id }: { children: React.ReactNode, id?: string }) => (
   <motion.h2 
@@ -37,7 +24,7 @@ const SectionTitle = ({ children, id }: { children: React.ReactNode, id?: string
     viewport={{ once: true }}
     className="text-4xl md:text-6xl font-black font-heading text-center mb-16 pt-20"
   >
-    <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-[#00f0ff] to-[#7c3aed]">
+    <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-neon-red to-deep-crimson">
       {children}
     </span>
   </motion.h2>
@@ -56,7 +43,7 @@ export default function Home() {
   }, [showPreloader]);
 
   return (
-    <main className="min-h-screen text-white selection:bg-[#00f0ff]/30 pb-32 overflow-hidden">
+    <main className="min-h-screen text-white selection:bg-neon-red/30 pb-32 overflow-hidden bg-black">
       
       <AnimatePresence>
         {showPreloader && (
@@ -64,106 +51,71 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <FloatingNav />
+      <Header />
       
-      {/* Background Layer: 3D Particles */}
-      <PulseSphereBackground />
-      
-      {/* Background Overlay: Fluid Distortion (REMOVED) */}
-      {/* <div className="fixed inset-0 z-[1] pointer-events-none md:pointer-events-auto">
-        <FluidLayer />
-      </div> */}
+      <Hero />
 
-      {/* Hero Section */}
-      <section className="relative z-10 h-screen flex flex-col items-center justify-center overflow-hidden pointer-events-none">
-        {/* Enable pointer events on interactive children only */}
-        <div className="relative z-10 text-center px-4 pointer-events-auto">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-          >
-            <span className="inline-block px-4 py-1 mb-6 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-sm font-mono text-[#00f0ff] shadow-[0_0_20px_rgba(0,240,255,0.3)]">
-              ⚡ 400+ Hackers Registered
-            </span>
-            <h1 className="text-6xl md:text-9xl font-black font-heading tracking-tighter text-white mb-6 drop-shadow-[0_0_30px_rgba(0,0,0,0.8)]">
-              HACKSAVVY
-              <br />
-              <span className="text-transparent bg-stroke text-white/90 drop-shadow-md">2026</span>
-            </h1>
-            <p className="text-xl md:text-2xl font-light text-gray-200 max-w-2xl mx-auto drop-shadow-lg font-sans">
-              <span className="text-[#00f0ff] font-bold drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">Ideate Innovate Inspire</span>. 
-              Build the future on February 12-13.
-            </p>
-          </motion.div>
+      {/* Content Sections */}
+      <div className="relative z-20 space-y-32">
+        
+        <div id="about" className="container mx-auto px-4">
+          <SectionTitle>THE MISSION</SectionTitle>
+          <About />
+        </div>
+
+        <div id="tracks" className="container mx-auto px-4">
+          <SectionTitle>TRACKS & THEMES</SectionTitle>
+          <TracksGrid />
+        </div>
+
+        <div id="prizes" className="container mx-auto px-4">
+           <SectionTitle>PRIZE POOL</SectionTitle>
+           <PrizesBento />
+        </div>
+
+        <div id="timeline" className="container mx-auto px-4">
+          <SectionTitle>TIMELINE</SectionTitle>
+          <Timeline />
         </div>
         
-        {/* Scroll Indicator */}
-        <motion.div 
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 text-gray-500"
-        >
-          <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-[#00f0ff] to-transparent" />
-        </motion.div>
-      </section>
+        <div className="container mx-auto px-4">
+           <SectionTitle>GUIDELINES</SectionTitle>
+           <Guidelines />
+        </div>
 
-      {/* About Section */}
-      <About />
+        <div id="team" className="container mx-auto px-4">
+          <SectionTitle>THE SQUAD</SectionTitle>
+          <MeetTheTeam />
+        </div>
 
-      {/* Meet The Team Section */}
-      <MeetTheTeam />
+        <div id="sponsors" className="container mx-auto px-4">
+          <SectionTitle>OUR PARTNERS</SectionTitle>
+          <SponsorsMarquee />
+        </div>
 
-      {/* Tracks Section */}
-      <section id="tracks" className="container mx-auto px-4 relative z-10">
-        <SectionTitle>THEMES</SectionTitle>
-        <TracksGrid />
-      </section>
+        <div className="container mx-auto px-4 max-w-3xl">
+          <SectionTitle>FAQ</SectionTitle>
+          <FaqAccordion />
+        </div>
 
-      {/* Prizes Section */}
-      <section id="prizes" className="container mx-auto px-4 relative z-10">
-        <SectionTitle>TROPHY CASE</SectionTitle>
-        <PrizesBento />
-      </section>
-
-      {/* Timeline Section */}
-      <section className="container mx-auto px-4 relative z-10">
-        <SectionTitle>JOURNEY</SectionTitle>
-        <Timeline />
-      </section>
-
-      {/* Guidelines Section */}
-      <Guidelines />
-
-      {/* Sponsors Section */}
-      <section id="sponsors" className="relative z-10">
-         <SectionTitle>SPONSORS</SectionTitle>
-         <SponsorsMarquee />
-      </section>
-
-      {/* FAQ Section */}
-      <section id="faq" className="container mx-auto px-4 py-20 relative z-10">
-        <SectionTitle>PROTOCOL</SectionTitle>
-        <FaqAccordion />
-      </section>
+      </div>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-white/10 bg-black/50 backdrop-blur-xl mt-20">
+      <footer className="relative z-10 border-t border-white/10 bg-black/50 backdrop-blur-xl mt-32">
         <div className="container mx-auto px-4 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-2xl font-bold font-heading">
-            HACKSAVVY <span className="text-[#00f0ff]">2026</span>
+            HACKSAVVY <span className="text-neon-red">2.0</span>
           </div>
           <div className="flex gap-8 text-sm text-gray-500 font-mono">
-            <Link href="/coc" className="hover:text-[#00f0ff] transition-colors">CODE OF CONDUCT</Link>
-            <a href="#" className="hover:text-[#00f0ff] transition-colors">TERMS</a>
-            <a href="#" className="hover:text-[#00f0ff] transition-colors">PRIVACY</a>
+            <Link href="/coc" className="hover:text-neon-red transition-colors">CODE OF CONDUCT</Link>
+            <a href="#" className="hover:text-neon-red transition-colors">TERMS</a>
+            <a href="#" className="hover:text-neon-red transition-colors">PRIVACY</a>
           </div>
           <div className="text-gray-600 text-sm">
             © 2026 Hacksavvy Inc.
           </div>
         </div>
       </footer>
-
     </main>
   )
 }
