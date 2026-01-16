@@ -7,6 +7,7 @@ import Preloader from '@/components/ui/Preloader'
 import Header from '@/components/layout/Header'
 import Hero from '@/components/landing/Hero'
 import TracksGrid from '@/components/landing/TracksGrid'
+// Newly upgraded Prizes section
 import Prizes from '@/components/sections/Prizes'
 import Timeline from '@/components/sections/Timeline'
 import SponsorsMarquee from '@/components/landing/SponsorsMarquee'

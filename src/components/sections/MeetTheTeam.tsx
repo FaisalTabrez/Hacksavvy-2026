@@ -7,22 +7,22 @@ import { FACULTY_LEADERS, STUDENT_COORDINATORS } from '@/lib/constants'
 export default function MeetTheTeam() {
   return (
     <section id="team" className="container mx-auto px-4 py-20 relative z-10 scroll-mt-20">
-      <div className="text-center mb-16">
+      <div className="text-center mb-16 mt-20">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-bold font-heading text-white"
+          className="text-4xl md:text-5xl font-bold font-grotesk text-center text-white mb-4"
         >
-          Leadership & Team
+          Leadership & <span className="text-neon-red">Team</span>
         </motion.h2>
-        <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
+        <p className="text-gray-400 max-w-2xl mx-auto">
           The driving force behind HackSavvy 2026.
         </p>
       </div>
 
       {/* Faculty */}
-      <div className="mb-20">
+      <div className="mb-20 mt-12">
         <h3 className="text-2xl font-bold font-heading text-neon-red mb-8 text-center border-b border-white/10 pb-4">
             Faculty Guide
         </h3>
