@@ -3,13 +3,17 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Ticket, ArrowRight, Calendar, MapPin } from 'lucide-react'
+import RetroGrid from '@/components/ui/RetroGrid'
 
 export default function Hero() {
   return (
     <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-900/20 via-black to-black">
       
+      {/* Background Grid */}
+      <RetroGrid />
+
       {/* Abstract Background Elements */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 opacity-50">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-neon-red/10 rounded-full blur-[120px] animate-pulse" />
           <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-deep-crimson/20 rounded-full blur-[100px]" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-neon-red/5 rounded-full blur-[100px]" />
@@ -83,11 +87,8 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Grid Floor Effect */}
-      <div className="absolute bottom-0 w-full h-[300px] bg-[linear-gradient(to_bottom,transparent,rgba(255,42,42,0.05)_50%,rgba(255,42,42,0.1))] mask-image-gradient-to-t" 
-           style={{ perspective: '1000px' }}>
-         <div className="w-full h-full transform rotate-x-60 origin-bottom bg-[size:40px_40px] bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)]" />
-      </div>
+      {/* Grid Floor Effect - REMOVED, Replaced by RetroGrid component above */}
+      {/* <div className="absolute bottom-0 w-full h-[300px] ..." /> */}
 
     </section>
   )
