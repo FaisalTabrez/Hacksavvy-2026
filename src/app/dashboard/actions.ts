@@ -2,6 +2,7 @@
 
 import { supabase } from '@/lib/supabase'
 import nodemailer from 'nodemailer'
+import { revalidatePath } from 'next/cache'
 
 export async function approvePayment(teamId: string, teamName: string, track: string, leaderEmail: string, leaderName: string) {
   try {
@@ -12,6 +13,8 @@ export async function approvePayment(teamId: string, teamName: string, track: st
       .eq('id', teamId)
 
     if (error) throw new Error(error.message)
+
+    revalidatePath('/admin/dashboard')
 
     // 2. Send Confirmation Email
     const transporter = nodemailer.createTransport({
@@ -68,6 +71,8 @@ export async function rejectPayment(teamId: string, leaderEmail: string, leaderN
         .eq('id', teamId)
 
         if (error) throw new Error(error.message)
+
+        revalidatePath('/admin/dashboard')
 
         // 2. Send Rejection Email
         const transporter = nodemailer.createTransport({

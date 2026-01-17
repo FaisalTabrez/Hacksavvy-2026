@@ -7,8 +7,14 @@ import { ShieldAlert, Activity, Users, CreditCard } from 'lucide-react'
 export default async function AdminDashboardPage() {
   const supabase = await createClient()
 
-  // Fetch all teams
-  const { data: teams, error } = await supabase.from('teams').select('*').order('created_at', { ascending: false })
+  // Fetch ONLY pending teams for the "Command Center" action list
+  // Note: We might want separate lists for verified/rejected later, 
+  // but for the main queue, we only want actionable items.
+  const { data: teams, error } = await supabase
+    .from('teams')
+    .select('*')
+    .eq('payment_status', 'pending')
+    .order('created_at', { ascending: false })
 
   if (error) {
     return <div className="p-8 text-red-500">Failed to load teams: {error.message}</div>
