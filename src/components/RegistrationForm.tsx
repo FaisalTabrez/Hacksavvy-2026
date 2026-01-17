@@ -134,8 +134,8 @@ export default function RegistrationForm({ user, initialData }: { user: any, ini
 
     try {
       const result = await registerTeam(formData)
-      ifrouter.refresh()
-        window.location.href = '/register/success'
+      if (result.success) {
+        router.refresh()
       } else {
         setSubmissionError(result.error || "Registration failed")
       }
