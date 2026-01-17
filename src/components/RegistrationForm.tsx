@@ -22,7 +22,13 @@ const memberSchema = z.object({
 const registrationSchema = z.object({
   // Section A
   teamName: z.string().min(3, "Team Name must be at least 3 chars"),
-  track: z.enum(["AI", "CyberSec", "IoT", "Blockchain", "Robotics", "Open Innovation"]),
+  track: z.enum([
+    "AI, Automation, Robotics & Drone Technology",
+    "Cyber Security & Blockchain",
+    "IoT, VLSI & Embedded Systems",
+    "Sustainability & Environment",
+    "Open Innovation"
+  ]),
   // Removed Project Title and Abstract
 
   // Section B
@@ -150,11 +156,10 @@ export default function RegistrationForm({ user, initialData }: { user: any, ini
               {...register("track")}
               className="w-full bg-black/50 border border-white/10 rounded-lg p-3 focus:border-[#00f0ff] outline-none"
             >
-              <option value="AI">AI & ML</option>
-              <option value="CyberSec">Cybersecurity</option>
-              <option value="IoT">IoT</option>
-              <option value="Blockchain">Blockchain</option>
-              <option value="Robotics">Robotics</option>
+              <option value="AI, Automation, Robotics & Drone Technology">AI, Automation, Robotics & Drone Technology</option>
+              <option value="Cyber Security & Blockchain">Cyber Security & Blockchain</option>
+              <option value="IoT, VLSI & Embedded Systems">IoT, VLSI & Embedded Systems</option>
+              <option value="Sustainability & Environment">Sustainability & Environment</option>
               <option value="Open Innovation">Open Innovation</option>
             </select>
             {errors.track && <p className="text-red-500 text-xs mt-1">{errors.track.message}</p>}
