@@ -2,6 +2,7 @@
 
 import { createClient } from '@/utils/supabase/server'
 import nodemailer from 'nodemailer'
+import { revalidatePath } from 'next/cache'
 
 // Server Action to handle registration
 export async function registerTeam(formData: FormData) {
@@ -114,7 +115,8 @@ export async function registerTeam(formData: FormData) {
     })
 
     await Promise.allSettled(emailPromises)
-
+    // Revalidate dashboard to show MyTeamView immediately
+    revalidatePath('/dashboard')
     return { success: true }
   } catch (error) {
     console.error('Registration error:', error)
