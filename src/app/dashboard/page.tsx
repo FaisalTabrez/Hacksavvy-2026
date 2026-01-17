@@ -1,6 +1,4 @@
 
-'use server'
-
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import RegistrationForm from '@/components/RegistrationForm'
