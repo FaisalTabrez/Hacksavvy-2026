@@ -10,9 +10,8 @@ import Hero from '@/components/landing/Hero'
 import TracksGrid from '@/components/landing/TracksGrid'
 // Newly upgraded Prizes section
 import Timeline from '@/components/sections/Timeline'
-import SponsorsMarquee from '@/components/landing/SponsorsMarquee'
-import FAQ from '@/components/sections/FAQ'
 import About from '@/components/sections/About'
+import FAQ from '@/components/sections/FAQ'
 import Guidelines from '@/components/sections/Guidelines'
 import MeetTheTeam from '@/components/sections/MeetTheTeam'
 import Link from 'next/link'
@@ -96,13 +95,8 @@ export default function Home() {
           <MeetTheTeam />
         </div>
 
-        <div id="sponsors" className="container mx-auto px-4">
-          <SectionTitle>OUR PARTNERS</SectionTitle>
-          <SponsorsMarquee />
-        </div>
-
-        <div className="container mx-auto px-4 max-w-6xl">
-          <SectionTitle>COMMUNITY</SectionTitle>
+        <div id="faq" className="container mx-auto px-4 max-w-6xl">
+          <SectionTitle>FAQ</SectionTitle>
           <FAQ />
         </div>
 
