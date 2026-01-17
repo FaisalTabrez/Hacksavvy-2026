@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -49,6 +50,7 @@ const registrationSchema = z.object({
 export type RegistrationFormValues = z.infer<typeof registrationSchema>
 
 export default function RegistrationForm({ user, initialData }: { user: any, initialData?: any }) {
+  const router = useRouter()
   const [screenshot, setScreenshot] = useState<File | null>(null)
   const [submissionError, setSubmissionError] = useState<string | null>(null)
   const [copiedField, setCopiedField] = useState<string | null>(null)
@@ -132,7 +134,7 @@ export default function RegistrationForm({ user, initialData }: { user: any, ini
 
     try {
       const result = await registerTeam(formData)
-      if (result.success) {
+      ifrouter.refresh()
         window.location.href = '/register/success'
       } else {
         setSubmissionError(result.error || "Registration failed")
