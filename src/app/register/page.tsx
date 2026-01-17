@@ -41,11 +41,11 @@ export default function RegisterPage() {
       <div className="relative z-10 container mx-auto max-w-4xl">
         <div className="text-center mb-12">
             <h1 className="text-5xl font-black mb-4 uppercase tracking-tighter text-white">
-                Team <span className="text-neon-red">Registration</span>
+                Welcome to <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800">Hacksavvy 2026</span>
             </h1>
             <p className="text-gray-400 max-w-xl mx-auto">
                 Assemble your squad. Minimum 2, Maximum 5 members. 
-                Ensure you have your payment screenshot ready.
+                Ensure you have your payment details ready.
             </p>
         </div>
         

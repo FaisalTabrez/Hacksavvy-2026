@@ -20,8 +20,8 @@ export default async function DashboardPage() {
   if (state === 'NEW') {
     return (
       <div className="space-y-6 animate-in fade-in zoom-in duration-500">
-         <div className="bg-gradient-to-r from-[#00f0ff]/10 to-purple-500/10 border border-[#00f0ff]/20 p-8 rounded-2xl text-center backdrop-blur-sm">
-             <h1 className="text-3xl font-bold text-white mb-4">Welcome to <span className="text-[#00f0ff]">Hacksavvy 2.0</span></h1>
+         <div className="bg-gradient-to-r from-red-500/10 to-purple-500/10 border border-red-500/20 p-8 rounded-2xl text-center backdrop-blur-sm">
+             <h1 className="text-3xl font-bold text-white mb-4">Welcome to <span className="text-neon-red">Hacksavvy 2026</span></h1>
              <p className="text-gray-400 max-w-lg mx-auto mb-8">
                 Your journey into the Liquid Void begins here. Assemble your team and register to secure your spot.
              </p>

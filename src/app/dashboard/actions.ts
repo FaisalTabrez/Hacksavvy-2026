@@ -28,8 +28,8 @@ export async function approvePayment(teamId: string, teamName: string, track: st
       subject: 'Registration Confirmed! - Hacksavvy 2026',
       html: `
         <div style="font-family: sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
-          <div style="background-color: #00f0ff; padding: 20px; text-align: center;">
-             <h1 style="color: #000; margin: 0;">Welcome to Hacksavvy 2.0</h1>
+          <div style="background-color: #ef4444; padding: 20px; text-align: center;">
+             <h1 style="color: #fff; margin: 0;">Welcome to Hacksavvy 2026</h1>
           </div>
           <div style="padding: 24px;">
             <p style="font-size: 16px;">Hello <strong>${leaderName}</strong>,</p>

@@ -106,7 +106,7 @@ export default function Home() {
       <footer className="relative z-10 border-t border-white/10 bg-black/50 backdrop-blur-xl mt-32">
         <div className="container mx-auto px-4 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-2xl font-bold font-heading">
-            HACKSAVVY <span className="text-neon-red">2.0</span>
+            HACKSAVVY <span className="text-neon-red">2026</span>
           </div>
           <div className="flex gap-8 text-sm text-gray-500 font-mono">
             <Link href="/coc" className="hover:text-neon-red transition-colors">CODE OF CONDUCT</Link>

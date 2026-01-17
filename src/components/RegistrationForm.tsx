@@ -8,6 +8,8 @@ import { Trash2, Plus, Upload, Loader2, Copy, Check } from 'lucide-react'
 import Image from 'next/image'
 import { registerTeam } from '@/app/register/actions'
 
+const ACCEPTED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp", "application/pdf"];
+
 const memberSchema = z.object({
   name: z.string().min(2, "Name is required"),
   email: z.string().email("Invalid email"),
@@ -114,8 +116,14 @@ export default function RegistrationForm({ user, initialData }: { user: any, ini
     }
 
     if (!screenshot) {
-      setSubmissionError("Payment screenshot is required.")
+      setSubmissionError("Payment proof (Screenshot or PDF) is required.")
       return
+    }
+    
+    // Manual file type check for client-side
+    if (!ACCEPTED_FILE_TYPES.includes(screenshot.type)) {
+       setSubmissionError("Invalid file type. Please upload an Image or PDF.")
+       return
     }
 
     const formData = new FormData()
@@ -363,14 +371,15 @@ export default function RegistrationForm({ user, initialData }: { user: any, ini
 
         <div className="space-y-6 border-t border-white/5 pt-6">
             <div>
-              <label className={labelClasses}>Payment Screenshot</label>
+              <label className={labelClasses}>Payment Proof (Screenshot / PDF)</label>
               <div className="relative group">
                 <input 
                   type="file" 
-                  accept="image/*"
+                  accept=".jpg,.jpeg,.png,.webp,.pdf"
                   onChange={(e) => {
-                    if (e.target.files && e.target.files[0]) {
-                        setScreenshot(e.target.files[0])
+                    const file = e.target.files?.[0];
+                    if (file) {
+                        setScreenshot(file)
                     }
                   }}
                   className="hidden" 
@@ -381,10 +390,10 @@ export default function RegistrationForm({ user, initialData }: { user: any, ini
                   className={`w-full flex flex-col items-center justify-center gap-3 bg-white/5 border-2 border-dashed ${screenshot ? 'border-green-500/50 bg-green-500/5' : 'border-white/10 group-hover:border-red-500/50 group-hover:bg-red-500/5'} rounded-xl p-8 cursor-pointer transition-all duration-300`}
                 >
                   <Upload className={`w-8 h-8 ${screenshot ? 'text-green-400' : 'text-gray-400 group-hover:text-red-400'}`} />
-                  <span className={`text-sm font-medium ${screenshot ? 'text-green-300' : 'text-gray-400 group-hover:text-red-300'}`}>
-                    {screenshot ? screenshot.name : "Click to Upload Screenshot"}
+                  <span className={`text-sm font-medium ${screenshot ? 'text-green-300' : 'text-gray-400 group-hover:text-red-300'} break-all text-center`}>
+                    {screenshot ? screenshot.name : "Click to Upload Payment Proof"}
                   </span>
-                  {!screenshot && <span className="text-xs text-gray-600">Max size: 5MB (JPG, PNG)</span>}
+                  {!screenshot && <span className="text-xs text-gray-600">Max size: 5MB (JPG, PNG, PDF)</span>}
                 </label>
               </div>
             </div>
