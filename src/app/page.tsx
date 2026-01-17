@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 // Components
 import Preloader from '@/components/ui/Preloader'
@@ -43,8 +44,20 @@ export default function Home() {
   }, [showPreloader]);
 
   return (
-    <main className="min-h-screen text-white selection:bg-neon-red/30 pb-32 overflow-hidden bg-black">
+    <main className="min-h-screen text-white selection:bg-neon-red/30 pb-32 overflow-hidden relative">
       
+      {/* Global Background Layer */}
+      <div className="fixed inset-0 z-[-10]">
+        <Image
+          src="/assets/redlines.jpg"
+          alt="redlines background"
+          fill
+          className="object-cover opacity-40"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/60" /> {/* Dark Overlay */}
+      </div>
+
       <AnimatePresence>
         {showPreloader && (
           <Preloader onComplete={() => setShowPreloader(false)} />

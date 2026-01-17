@@ -2,6 +2,7 @@
 
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ChevronDown, Flag, Target, Box } from 'lucide-react'
 import { useState } from 'react'
@@ -26,7 +27,20 @@ export default function TrackDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white relative selection:bg-neon-red selection:text-black">
+    <div className="min-h-screen text-white relative selection:bg-neon-red selection:text-black">
+       
+       {/* Global Background Layer */}
+       <div className="fixed inset-0 z-[-1]">
+        <Image
+          src="/assets/redlines.jpg"
+          alt="redlines background"
+          fill
+          className="object-cover opacity-40"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/80" />
+      </div>
+
        {/* Background Ambience */}
        <div className="fixed inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-red-900/20 via-black to-black pointer-events-none z-0" />
        

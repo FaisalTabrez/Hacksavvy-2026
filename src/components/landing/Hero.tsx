@@ -7,10 +7,12 @@ import RetroGrid from '@/components/ui/RetroGrid'
 
 export default function Hero() {
   return (
-    <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-900/20 via-black to-black">
+    <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-transparent">
       
       {/* Background Grid */}
-      <RetroGrid />
+      <div className="absolute inset-0 z-0 opacity-50 pointer-events-none">
+        <RetroGrid />
+      </div>
 
       {/* Abstract Background Elements */}
       <div className="absolute inset-0 z-0 opacity-50">
