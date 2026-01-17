@@ -8,7 +8,6 @@ import Header from '@/components/layout/Header'
 import Hero from '@/components/landing/Hero'
 import TracksGrid from '@/components/landing/TracksGrid'
 // Newly upgraded Prizes section
-import Prizes from '@/components/sections/Prizes'
 import Timeline from '@/components/sections/Timeline'
 import SponsorsMarquee from '@/components/landing/SponsorsMarquee'
 import FAQ from '@/components/sections/FAQ'
@@ -67,10 +66,6 @@ export default function Home() {
         <div id="tracks" className="container mx-auto px-4">
           <SectionTitle>TRACKS & THEMES</SectionTitle>
           <TracksGrid />
-        </div>
-
-        <div id="prizes">
-           <Prizes />
         </div>
 
         <div id="timeline" className="container mx-auto px-4">

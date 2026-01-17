@@ -27,7 +27,7 @@ export default function Hero() {
           className="flex flex-col items-center"
         >
           {/* Badge */}
-          <span className="inline-flex items-center gap-2 px-4 py-1 mb-8 rounded-full bg-red-950/30 border border-red-500/20 text-sm font-mono text-neon-red shadow-[0_0_15px_rgba(255,42,42,0.2)]">
+          <span className="inline-flex items-center gap-2 px-4 py-1 mb-8 rounded-full bg-red-950/30 border border-red-500/20 text-sm font-mono text-gray-100 shadow-[0_0_15px_rgba(255,42,42,0.2)]">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
@@ -47,16 +47,24 @@ export default function Hero() {
             Step into the void and build the future of technology.
           </p>
 
-          {/* Meta Info */}
-          <div className="flex flex-wrap items-center justify-center gap-6 mb-10 text-gray-400 font-mono text-sm">
-             <div className="flex items-center gap-2">
-                 <Calendar className="w-4 h-4 text-neon-red" />
-                 <span>Feb 12-13, 2026</span>
+          {/* Meta Info & Prize Pool */}
+          <div className="flex flex-col items-center gap-6 mb-12">
+             <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8 text-white">
+                <div className="flex items-center gap-3">
+                    <Calendar className="w-6 h-6 text-neon-red" />
+                    <span className="text-xl md:text-2xl font-semibold tracking-tight">Feb 12-13, 2026</span>
+                </div>
+                <div className="hidden md:block w-px h-8 bg-white/20" />
+                <div className="flex items-center gap-3">
+                    <MapPin className="w-6 h-6 text-neon-red" />
+                    <span className="text-xl md:text-2xl font-semibold tracking-tight">MGIT, Hyderabad</span>
+                </div>
              </div>
-             <div className="w-px h-4 bg-white/20 hidden md:block" />
-             <div className="flex items-center gap-2">
-                 <MapPin className="w-4 h-4 text-neon-red" />
-                 <span>MGIT, Hyderabad</span>
+             
+             <div className="relative mt-2">
+                <span className="text-3xl md:text-4xl font-black font-mono text-neon-red drop-shadow-[0_0_25px_rgba(220,38,38,0.6)]">
+                  Prize Pool: ₹2.5 Lakhs
+                </span>
              </div>
           </div>
 
