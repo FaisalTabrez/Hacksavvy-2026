@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
-import { ADMIN_EMAILS } from '@/lib/constants'
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
@@ -13,7 +12,15 @@ export async function GET(request: Request) {
     if (!error && session?.user?.email) {
       // Intelligent Routing based on Roles
       let next = '/dashboard'
-      if (ADMIN_EMAILS.includes(session.user.email)) {
+      
+      // Check admins table
+      const { data: admin } = await supabase
+        .from('admins')
+        .select('email')
+        .eq('email', session.user.email)
+        .single()
+
+      if (admin) {
         next = '/admin/dashboard'
       }
 

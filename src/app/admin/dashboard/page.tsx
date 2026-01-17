@@ -6,11 +6,6 @@ import { ShieldAlert, Activity, Users, CreditCard } from 'lucide-react'
 
 export default async function AdminDashboardPage() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user || !user.email || !ADMIN_EMAILS.includes(user.email)) {
-    redirect('/dashboard')
-  }
 
   // Fetch all teams
   const { data: teams, error } = await supabase.from('teams').select('*').order('created_at', { ascending: false })
