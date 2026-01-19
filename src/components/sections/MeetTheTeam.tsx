@@ -24,17 +24,10 @@ const FACULTY_MEMBERS = [
 
 export default function MeetTheTeam() {
   return (
-    <section id="team" className="container mx-auto px-4 py-20 relative z-10 scroll-mt-20 overflow-hidden">
-      <div className="text-center mb-16 mt-20">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-4xl md:text-5xl font-black font-grotesk text-center text-white mb-4 uppercase tracking-tighter"
-        >
-          MEET THE <span className="text-neon-red">TEAM</span>
-        </motion.h2>
-      </div>
+    <section className="container mx-auto px-4 py-20 relative z-10 scroll-mt-20 overflow-hidden">
+      <h2 className="mb-16 text-center text-5xl font-bold font-grotesk text-white md:text-6xl">
+        MEET THE <span className="text-red-500">TEAM</span>
+      </h2>
 
       {/* Faculty Coordinators Marquee */}
       <div className="mb-24 mt-12">

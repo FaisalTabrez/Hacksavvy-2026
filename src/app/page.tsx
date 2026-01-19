@@ -92,7 +92,6 @@ export default function Home() {
         </div>
 
         <div id="team" className="container mx-auto px-4">
-          <SectionTitle>THE SQUAD</SectionTitle>
           <MeetTheTeam />
         </div>
 
