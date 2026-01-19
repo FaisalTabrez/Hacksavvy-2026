@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 // Components
 import Preloader from '@/components/ui/Preloader'
 import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 import Hero from '@/components/landing/Hero'
 import TracksGrid from '@/components/landing/TracksGrid'
 // Newly upgraded Prizes section
@@ -102,22 +103,7 @@ export default function Home() {
 
       </div>
 
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-white/10 bg-black/50 backdrop-blur-xl mt-32">
-        <div className="container mx-auto px-4 py-12 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-2xl font-bold font-heading">
-            HACKSAVVY <span className="text-neon-red">2026</span>
-          </div>
-          <div className="flex gap-8 text-sm text-gray-500 font-mono">
-            <Link href="/coc" className="hover:text-neon-red transition-colors">CODE OF CONDUCT</Link>
-            <a href="#" className="hover:text-neon-red transition-colors">TERMS</a>
-            <a href="#" className="hover:text-neon-red transition-colors">PRIVACY</a>
-          </div>
-          <div className="text-gray-600 text-sm">
-            © 2026 Hacksavvy Inc.
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   )
 }
