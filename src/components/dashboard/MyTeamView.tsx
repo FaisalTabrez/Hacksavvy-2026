@@ -7,6 +7,7 @@ import Image from "next/image";
 // Define the Team Data Interface based on your DB Schema
 interface TeamData {
   id: string;
+  team_id?: string; // Custom ID from DB trigger
   team_name: string;
   track: string;
   payment_status: "pending" | "verified" | "rejected";
@@ -62,9 +63,6 @@ export default function MyTeamView({ team }: MyTeamViewProps) {
             <h1 className="text-4xl md:text-5xl font-black text-white mb-2 uppercase tracking-tight">
                 My Team: <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-600">{team.team_name}</span>
             </h1>
-            <p className="text-gray-400 font-mono text-sm max-w-xl">
-               ID: <span className="text-white/60 select-all">{team.id}</span>
-            </p>
         </div>
       </div>
 
@@ -128,27 +126,6 @@ export default function MyTeamView({ team }: MyTeamViewProps) {
                 </div>
             ))}
           </div>
-      </div>
-
-      {/* COORDINATORS INFO */}
-      <div className="bg-gradient-to-r from-gray-900 to-black border border-white/10 p-6 rounded-2xl">
-         <h4 className="text-gray-400 uppercase text-xs font-bold tracking-widest mb-4">Event Coordinators</h4>
-         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-             <div className="flex items-center gap-3">
-                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                 <div>
-                     <p className="text-white text-sm font-medium">Dr. Alan Grant</p>
-                     <p className="text-xs text-gray-500">Faculty Coordinator</p>
-                 </div>
-             </div>
-             <div className="flex items-center gap-3">
-                 <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-                 <div>
-                     <p className="text-white text-sm font-medium">Ellie Sattler</p>
-                     <p className="text-xs text-gray-500">Student Lead</p>
-                 </div>
-             </div>
-         </div>
       </div>
 
       {/* LOGOUT BUTTON - Server Action Form */}

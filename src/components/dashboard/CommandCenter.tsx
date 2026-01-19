@@ -8,6 +8,7 @@ import { createClient } from '@/utils/supabase/client'
 
 interface Team {
   id: string
+  team_id?: string // Custom ID
   team_name: string
   leader_user_id: string 
   track: string
@@ -128,6 +129,7 @@ export default function CommandCenter({ teams: initialTeams }: { teams: Team[] }
           <table className="w-full text-left text-sm text-gray-400">
             <thead className="bg-black/40 text-gray-200 uppercase font-mono text-xs">
               <tr>
+                <th className="p-4">ID</th>
                 <th className="p-4">Team</th>
                 <th className="p-4">Track</th>
                 <th className="p-4">Transaction ID</th>
@@ -137,13 +139,14 @@ export default function CommandCenter({ teams: initialTeams }: { teams: Team[] }
             <tbody className="divide-y divide-white/5">
               {teams.length === 0 ? (
                 <tr>
-                    <td colSpan={4} className="p-8 text-center text-gray-500">
+                    <td colSpan={5} className="p-8 text-center text-gray-500">
                         No pending approvals. The Void is quiet.
                     </td>
                 </tr>
               ) : (
                 teams.map((team) => (
                   <tr key={team.id} className="hover:bg-white/5 transition">
+                    <td className="p-4 font-mono text-neon-red font-bold">{team.team_id || '-'}</td>
                     <td className="p-4 font-medium text-white">{team.team_name}</td>
                     <td className="p-4">
                         <span className="px-2 py-1 rounded-md bg-blue-500/10 text-blue-400 text-xs border border-blue-500/20">
@@ -201,7 +204,14 @@ export default function CommandCenter({ teams: initialTeams }: { teams: Team[] }
               <div className="md:w-1/2 p-6 flex flex-col">
                   <div className="flex justify-between items-start mb-6">
                       <div>
-                        <h2 className="text-2xl font-bold text-white mb-1">{selectedTeam.team_name}</h2>
+                        <div className="flex items-center gap-2 mb-1">
+                             <h2 className="text-2xl font-bold text-white">{selectedTeam.team_name}</h2>
+                             {selectedTeam.team_id && (
+                                <span className="bg-red-500/20 text-red-500 text-xs px-2 py-1 rounded font-mono border border-red-500/30">
+                                    {selectedTeam.team_id}
+                                </span>
+                             )}
+                        </div>
                         <p className="text-gray-400 text-sm">Track: <span className="text-[#00f0ff]">{selectedTeam.track}</span></p>
                       </div>
                       <button onClick={() => setSelectedTeam(null)} className="text-gray-500 hover:text-white">

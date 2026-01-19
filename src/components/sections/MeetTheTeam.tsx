@@ -2,7 +2,40 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { STUDENT_COORDINATORS } from '@/lib/constants'
+import { Phone } from 'lucide-react'
+
+const STUDENT_COORDINATORS = [
+  { 
+    name: "Junaid Ahmed Khan", 
+    role: "Student Co-ordinator", 
+    phone: "+91 8008800401", 
+    img: "/student/1.jpg" 
+  },
+  { 
+    name: "Sai Amrutha Polu", 
+    role: "Student Co-ordinator", 
+    phone: "+91 8464085246", 
+    img: "/student/2.jpg" 
+  },
+  { 
+    name: "Maneesha Kallepalli", 
+    role: "Student Co-ordinator", 
+    phone: "+91 9393005221", 
+    img: "/student/3.jpg" 
+  },
+  { 
+    name: "Shreya Reddy Thangella", 
+    role: "Student Co-ordinator", 
+    phone: "+91 8919290101", 
+    img: "/student/4.jpg" 
+  },
+  { 
+    name: "Vrundha Reddy Panga", 
+    role: "Student Co-ordinator", 
+    phone: "+91 9133199706", 
+    img: "/student/5.jpg" 
+  }
+];
 
 const FACULTY_MEMBERS = [
   { name: "Dr. Ch. Ramesh Babu", role: "Faculty Co-Ordinator", img: "/faculty/1.jpg" },
@@ -81,12 +114,13 @@ export default function MeetTheTeam() {
         </div>
       </div>
 
-      {/* Students */}
-      <div>
-        <h3 className="text-2xl font-bold font-heading text-neon-red mb-8 text-center border-b border-white/10 pb-4 max-w-xl mx-auto">
+      {/* Student Coordinators */}
+      <div className="mt-20">
+        <h3 className="text-3xl md:text-4xl font-bold font-grotesk text-center text-red-500 mb-10 uppercase tracking-widest">
             Student Coordinators
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center max-w-5xl mx-auto">
+        
+        <div className="flex flex-wrap justify-center gap-8">
           {STUDENT_COORDINATORS.map((student, index) => (
             <motion.div
               key={student.name}
@@ -94,20 +128,33 @@ export default function MeetTheTeam() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-neon-red/50 transition-colors group"
+              className="flex flex-col items-center w-72 bg-neutral-900/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 transition-all duration-300 hover:border-red-600 hover:shadow-[0_0_20px_rgba(220,38,38,0.2)] group"
             >
-              <div className="relative h-16 w-16 rounded-full overflow-hidden border border-white/20 group-hover:border-red-500/50 transition-colors">
-                <Image
-                  src={student.image}
-                  alt={student.name}
-                  fill
-                  className="object-cover"
-                />
+              {/* Circular Avatar */}
+              <div className="relative w-40 h-40 rounded-full overflow-hidden border-2 border-red-600/50 group-hover:border-red-500 transition-colors">
+                 <Image
+                    src={student.img}
+                    alt={student.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                 />
               </div>
-              <div>
-                <h4 className="font-bold text-white group-hover:text-red-400 transition-colors">{student.name}</h4>
-                <p className="text-sm text-gray-400">{student.role}</p>
-              </div>
+
+              {/* Content */}
+              <h4 className="text-xl font-bold text-white mt-6 text-center">
+                {student.name}
+              </h4>
+              <p className="text-sm text-gray-400 font-mono text-center uppercase mt-1">
+                {student.role}
+              </p>
+              
+              <a 
+                href={`tel:${student.phone}`} 
+                className="flex items-center gap-2 mt-3 text-red-500 hover:text-red-400 font-mono text-sm transition-colors"
+              >
+                  <Phone className="w-4 h-4" />
+                  {student.phone}
+              </a>
             </motion.div>
           ))}
         </div>
