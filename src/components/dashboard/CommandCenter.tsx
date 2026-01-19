@@ -1,8 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { Check, X, Eye, Loader2, ExternalLink } from 'lucide-react'
+import { Check, X, Eye, Loader2, ExternalLink, Download, FileSpreadsheet } from 'lucide-react'
 import { approvePayment, rejectPayment } from '@/app/dashboard/actions'
+import { downloadTeamsCSV } from '@/utils/csv-exporter'
+import { createClient } from '@/utils/supabase/client'
 
 interface Team {
   id: string
@@ -20,6 +22,30 @@ export default function CommandCenter({ teams: initialTeams }: { teams: Team[] }
   const [teams, setTeams] = useState<Team[]>(initialTeams)
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null)
   const [processing, setProcessing] = useState<string | null>(null) // teamId being processed
+  const [isExporting, setIsExporting] = useState(false)
+
+  const handleExport = async () => {
+      setIsExporting(true)
+      try {
+          // Fetch complete dataset for export, not just what's in view (which might be filtered)
+          const supabase = createClient()
+          const { data: allTeams, error } = await supabase
+            .from('teams')
+            .select('*')
+            .order('created_at', { ascending: false })
+          
+          if (error) {
+              alert('Export failed: ' + error.message)
+          } else if (allTeams) {
+              downloadTeamsCSV(allTeams)
+          }
+      } catch (err) {
+          console.error(err)
+          alert('Export error occurred')
+      } finally {
+          setIsExporting(false)
+      }
+  }
 
   const handleApprove = async (team: Team) => {
     if(!confirm(`Approve team "${team.team_name}"? This will send a confirmation email.`)) return;
@@ -76,12 +102,25 @@ export default function CommandCenter({ teams: initialTeams }: { teams: Team[] }
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-         <h2 className="text-2xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
-            Command Center
-         </h2>
-         <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-xs font-mono border border-red-500/20">
-            ADMIN ACCESS ONLY
-         </span>
+         <div>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+                Command Center
+            </h2>
+            <div className="flex items-center gap-3 mt-1">
+                <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-xs font-mono border border-red-500/20">
+                    ADMIN ACCESS ONLY
+                </span>
+            </div>
+         </div>
+
+         <button
+            onClick={handleExport}
+            disabled={isExporting}
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-all shadow-lg shadow-green-900/20 disabled:opacity-50 disabled:cursor-not-allowed"
+         >
+             {isExporting ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileSpreadsheet className="w-4 h-4" />}
+             {isExporting ? 'Exporting...' : 'Export CSV'}
+         </button>
       </div>
 
       <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden backdrop-blur-sm">

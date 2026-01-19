@@ -40,7 +40,7 @@ export default function Hero() {
           {/* Main Title */}
           <h1 className="text-5xl md:text-8xl font-black font-heading tracking-tighter text-white mb-6 leading-none whitespace-nowrap">
             HACK<span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-red to-deep-crimson drop-shadow-[0_0_20px_rgba(220,38,38,0.5)]">SAVVY</span>
-            <span className="text-white">-26</span>
+            <span className="text-white ml-3">-2026</span>
           </h1>
 
           {/* Subtitle */}
