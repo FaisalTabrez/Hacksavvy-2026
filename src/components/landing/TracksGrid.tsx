@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { MoveRight } from 'lucide-react'
 import { TRACKS_THEMES } from '@/lib/constants'
 
 // Helper to map track titles to slugs
@@ -24,7 +25,7 @@ export default function TracksGrid() {
         const slug = getSlug(track.title)
         
         return (
-            <Link key={track.title} href={slug === '#' ? '#' : `/tracks/${slug}`} className="block h-full">
+            <Link key={track.title} href={slug === '#' ? '#' : `/tracks/${slug}`} className="block h-full relative group">
                 <motion.div
                 whileHover={{ y: -10 }}
                 className={`
@@ -48,6 +49,14 @@ export default function TracksGrid() {
                 {/* Red Glow Border */}
                 <div className="absolute inset-0 rounded-2xl ring-1 ring-white/10 group-hover:ring-neon-red/50 transition-all duration-300 z-20 pointer-events-none" />
                 
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out border border-red-500/50 rounded-2xl">
+                     <MoveRight className="w-6 h-6 mb-2 text-white" />
+                     <p className="text-red-500 font-bold font-grotesk text-center px-4">
+                        Click here to view Problem Statements
+                     </p>
+                </div>
+
                 {/* Content */}
                 <div className="relative z-20">
                     <h3 className="text-2xl font-bold font-heading mb-2 text-white group-hover:text-neon-red transition-colors">
