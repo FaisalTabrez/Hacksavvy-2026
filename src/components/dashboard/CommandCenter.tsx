@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Check, X, Eye, Loader2, ExternalLink, FileSpreadsheet, Users, Clock, CheckCircle, XCircle } from 'lucide-react'
 import { downloadTeamsCSV } from '@/utils/csv-exporter'
 import { createClient } from '@/utils/supabase/client'
@@ -24,6 +24,39 @@ export default function CommandCenter({ teams: initialTeams }: { teams: Team[] }
   const [processing, setProcessing] = useState<string | null>(null) // teamId being processed
   const [isExporting, setIsExporting] = useState(false)
   const [activeFilter, setActiveFilter] = useState<'ALL' | 'PENDING' | 'VERIFIED' | 'REJECTED'>('ALL')
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        console.log("Fetching teams...");
+        const supabase = createClient();
+        
+        // 1. Check if user is logged in
+        const { data: { user } } = await supabase.auth.getUser();
+        console.log("Current User:", user?.email);
+  
+        // 2. Fetch Teams
+        const { data, error } = await supabase
+          .from('teams')
+          .select('*')
+          .order('created_at', { ascending: false });
+  
+        if (error) {
+          console.error("Supabase Error:", error.message);
+          // alert("Error fetching data: " + error.message); // Optional: alert creates noise
+        } else {
+          console.log("Teams fetched:", data?.length);
+          if (data && data.length > 0) {
+              setTeams(data as unknown as Team[]);
+          }
+        }
+      } catch (err) {
+        console.error("Unexpected error:", err);
+      }
+    };
+  
+    fetchTeams();
+  }, []);
 
   const stats = useMemo(() => {
     return {
