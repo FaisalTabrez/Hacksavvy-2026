@@ -36,6 +36,41 @@ export const THEME_DETAILS = {
         statement: "Manual inspection of infrastructure is costly, slow, and unsafe. Cities require autonomous drone-based inspection systems for early detection of structural anomalies. Participants must design an autonomous drone system for real-time infrastructure monitoring, anomaly detection, and reporting.",
         objectives: ["Perform automated visual inspection", "Detect cracks, corrosion, and deformation", "Predict maintenance needs", "Reduce inspection time and risk"],
         deliverables: ["Drone-based vision model", "Structural anomaly detection pipeline", "Predictive maintenance analytics", "Inspection report generation system"]
+      },
+      {
+        id: "PS-1.6",
+        title: "AI-Enabled Disaster Response and Search-and-Rescue Robotics",
+        statement: "Natural and man-made disasters such as earthquakes, floods, fires, and industrial accidents require rapid and coordinated search-and-rescue (SAR) operations. Human responders face high risk, limited visibility, and time-critical constraints. Participants must design an AI-powered robotic and drone-assisted SAR system that autonomously explores disaster zones, detects survivors, and supports rescue planning.",
+        objectives: ["Detect human presence using vision, thermal, and audio data", "Enable autonomous navigation in unstructured environments", "Prioritize rescue tasks based on risk and survivability", "Provide real-time situational awareness to rescue teams"],
+        deliverables: ["AI-based survivor detection models", "Autonomous navigation and exploration logic", "SAR coordination dashboard", "Simulation or field-test results"]
+      },
+      {
+        id: "PS-1.7",
+        title: "Intelligent Robotic Automation for Smart Warehousing",
+        statement: "Modern warehouses require high efficiency, accuracy, and adaptability to dynamic demand. Traditional automation systems lack intelligence, flexibility, and real-time optimization. Participants must develop an AI-driven robotic warehouse automation system for inventory handling, order picking, and logistics optimization.",
+        objectives: ["Optimize robot task allocation and path planning", "Enable vision-based object recognition and picking", "Predict demand and optimize inventory placement", "Improve throughput and energy efficiency"],
+        deliverables: ["Robotic control and coordination algorithms", "Vision-based object detection and grasping model", "Warehouse simulation and performance metrics", "System architecture documentation"]
+      },
+      {
+        id: "PS-1.8",
+        title: "AI-Driven Precision Agriculture using Autonomous Drones and Robots",
+        statement: "Agriculture faces challenges such as water scarcity, crop diseases, and inefficient resource usage. Precision agriculture using AI and robotics can significantly improve productivity and sustainability. Participants must design an autonomous system using drones and ground robots for crop monitoring, disease detection, and targeted intervention.",
+        objectives: ["Monitor crop health using multi-spectral imagery", "Detect pests, diseases, and nutrient deficiencies", "Enable targeted spraying and irrigation", "Improve yield while reducing resource wastage"],
+        deliverables: ["AI models for crop health analysis", "Drone/robot navigation and task execution logic", "Precision intervention strategy", "Farmer-friendly dashboard or mobile app"]
+      },
+      {
+        id: "PS-1.9",
+        title: "Autonomous Surveillance and Threat Detection System",
+        statement: "Critical infrastructure such as airports, borders, power plants, and campuses require continuous surveillance to detect intrusions and anomalous activities. Participants must develop an AI-enabled autonomous surveillance system using drones, cameras, and sensors for real-time threat detection and response.",
+        objectives: ["Detect unauthorized intrusions and suspicious behavior", "Perform real-time video analytics", "Enable autonomous patrol planning", "Provide explainable alerts to security operators"],
+        deliverables: ["Vision-based anomaly detection models", "Autonomous patrol and coverage algorithms", "Alerting and visualization system", "Evaluation on simulated or real datasets"]
+      },
+      {
+        id: "PS-1.10",
+        title: "Human-Robot Collaboration System for Industrial Safety",
+        statement: "In industrial environments, close collaboration between humans and robots increases productivity but introduces safety risks if not properly managed. Participants must design an AI-powered human–robot collaboration system that ensures safety, adaptability, and efficiency in smart manufacturing setups.",
+        objectives: ["Detect human presence and intent in real time", "Enable adaptive robot behavior for safe collaboration", "Predict and prevent potential accidents", "Optimize task sharing between humans and robots"],
+        deliverables: ["Human intention and activity recognition models", "Safe robot control and motion-planning algorithms", "Risk assessment and mitigation module", "Demonstration prototype or simulation"]
       }
     ]
   },
@@ -76,6 +111,41 @@ export const THEME_DETAILS = {
         statement: "Manual incident response is slow and error-prone. Develop an AI-assisted Security Orchestration, Automation, and Response (SOAR) system that automatically generates, executes, and improves incident response workflows.",
         objectives: ["NLP-based incident classification", "Dynamic playbook generation", "Integration with security tools", "Continuous post-incident learning", "Compliance-aligned reporting"],
         deliverables: ["SOAR platform prototype", "Incident simulation results", "Documentation and demo"]
+      },
+      {
+        id: "PS-2.6",
+        title: "Zero-Trust Security Framework for IoT Environments",
+        statement: "IoT devices lack strong authentication and secure communication mechanisms. Participants must design a Zero-Trust IoT security framework ensuring authenticated, encrypted, and continuously verified communication among devices.",
+        objectives: ["Implement zero-trust communication", "Secure device identity lifecycle", "Detect compromised devices"],
+        deliverables: ["Zero-trust IoT prototype", "Device trust scoring system", "Attack simulation results"]
+      },
+      {
+        id: "PS-2.7",
+        title: "Blockchain-Based Self-Sovereign Digital Identity System",
+        statement: "Centralized identity systems expose users to privacy and identity theft risks. Build a blockchain-backed SSI platform that enables users to create, manage, and verify digital identities.",
+        objectives: ["Enable user-controlled digital identities", "Support verifiable credentials", "Ensure privacy-preserving authentication"],
+        deliverables: ["SSI wallet and verifier portal", "Smart contract-based identity system", "Use-case demonstrations"]
+      },
+      {
+        id: "PS-2.8",
+        title: "Dark Web Threat Intelligence and Early Warning System",
+        statement: "Cyber threats often emerge on dark web forums and marketplaces before attacks occur. Develop a system to monitor sources and detect emerging threats.",
+        objectives: ["Monitor dark web sources (simulated/legal)", "Detect emerging threats", "Generate early warnings"],
+        deliverables: ["Threat intelligence dashboard", "Alerting and reporting system", "Trend analysis reports"]
+      },
+      {
+        id: "PS-2.9",
+        title: "Real-Time Credit Card Fraud Detection with Explainable AI",
+        statement: "Financial fraud detection requires real-time processing with regulatory transparency. Develop a system capable of processing streaming transaction data while providing explainable decisions.",
+        objectives: ["Detect fraudulent transactions in real time", "Provide explainable decisions", "Handle concept drift"],
+        deliverables: ["Fraud detection engine", "Explainability dashboard", "Performance evaluation report"]
+      },
+      {
+        id: "PS-2.10",
+        title: "AI-Driven Automated Incident Response and SOAR Platform",
+        statement: "Manual incident response is slow and inconsistent across security teams. Develop an AI-assisted SOAR system that automatically generates and executes incident response workflows.",
+        objectives: ["Automate incident detection and response", "Generate adaptive response playbooks", "Improve response time and consistency"],
+        deliverables: ["SOAR platform prototype", "Incident simulation results", "Executive and technical reports"]
       }
     ]
   },
@@ -116,6 +186,41 @@ export const THEME_DETAILS = {
         statement: "Develop an AI-optimized smart energy system to monitor real-time building energy consumption, predict peak usage, and automate energy-saving actions.",
         objectives: ["Monitor real-time building energy consumption", "Predict peak energy usage using AI/ML", "Automate energy-saving actions", "Reduce energy costs and wastage"],
         deliverables: ["AI-based energy prediction models", "IoT-enabled monitoring system", "Automated energy optimization strategies", "Interactive dashboard and documentation"]
+      },
+      {
+        id: "PS-3.6",
+        title: "Intelligent Traffic Signal Controller using Embedded AI",
+        statement: "Fixed-time traffic signals fail to adapt to dynamic traffic conditions. Develop an embedded AI system to adapt signals in real-time.",
+        objectives: ["Adapt traffic signals based on real-time traffic", "Reduce congestion and waiting time", "Prioritize emergency vehicles", "Improve road safety"],
+        deliverables: ["Embedded AI traffic control algorithm", "Traffic simulation and performance metrics", "Signal controller prototype", "Visualization dashboard"]
+      },
+      {
+        id: "PS-3.7",
+        title: "Low-Power IoT-Based Air Quality Monitoring System",
+        statement: "Urban and industrial air pollution requires continuous, fine-grained monitoring. Design an affordable, scalable, and low-power monitoring system.",
+        objectives: ["Monitor key air quality parameters", "Enable city-scale sensor deployment", "Provide real-time alerts", "Support data-driven policy decisions"],
+        deliverables: ["IoT air quality sensor node", "Data aggregation and analytics platform", "Alert and visualization dashboard", "Deployment report"]
+      },
+      {
+        id: "PS-3.8",
+        title: "Secure Embedded System for Industrial IoT Devices",
+        statement: "Industrial IoT devices are vulnerable to firmware attacks and data tampering. Design a secure embedded system for industrial applications.",
+        objectives: ["Secure device boot and firmware updates", "Protect data integrity and confidentiality", "Detect device-level anomalies", "Ensure reliable operation"],
+        deliverables: ["Secure embedded firmware design", "Device authentication mechanism", "Anomaly detection module", "Security evaluation report"]
+      },
+      {
+        id: "PS-3.9",
+        title: "Autonomous Smart Irrigation System using IoT and AI",
+        statement: "Traditional irrigation methods waste water. Design an autonomous system to monitor soil and weather to optimize irrigation.",
+        objectives: ["Monitor soil moisture and weather conditions", "Optimize irrigation schedules", "Reduce water consumption", "Improve crop yield"],
+        deliverables: ["IoT-based irrigation controller", "AI-driven scheduling algorithm", "Farmer dashboard or mobile app", "Field-test or simulation results"]
+      },
+      {
+        id: "PS-3.10",
+        title: "Embedded Vision System for Industrial Quality Inspection",
+        statement: "Manual quality inspection is slow and error-prone. Develop an embedded vision system for real-time defect detection.",
+        objectives: ["Detect surface and structural defects", "Perform real-time inspection", "Reduce production defects", "Improve manufacturing efficiency"],
+        deliverables: ["Embedded vision inspection model", "Defect classification system", "Performance evaluation metrics", "Prototype or simulation demo"]
       }
     ]
   },
@@ -156,6 +261,41 @@ export const THEME_DETAILS = {
         statement: "Design an AI-driven waste-to-energy system that characterizes biomass feedstock, optimizes conversion processes, and maximizes energy output while minimizing environmental impact.",
         objectives: ["Manage variability in waste composition", "Reduce process inefficiencies", "Accurate prediction of energy yield", "Integration with circular economy objectives"],
         deliverables: ["Functional prototype or simulation", "Biomass classification results", "Energy efficiency report", "Documentation and demo video"]
+      },
+      {
+        id: "PS-4.6",
+        title: "Smart Water Quality Monitoring and Pollution Prediction System",
+        statement: "Water pollution threatens ecosystems and public health. Design a system for real-time monitoring and pollution prediction.",
+        objectives: ["Monitor real-time water quality parameters", "Predict pollution events", "Enable early warning alerts", "Support environmental decision-making"],
+        deliverables: ["IoT-based water quality monitoring system", "Pollution prediction models", "Alert and visualization dashboard", "Deployment and evaluation report"]
+      },
+      {
+        id: "PS-4.7",
+        title: "AI-Driven Precision Forestry and Biodiversity Monitoring",
+        statement: "Deforestation and biodiversity loss require continuous monitoring. Develop an AI system using satellite/drone data for conservation efforts.",
+        objectives: ["Monitor forest cover and biodiversity", "Detect illegal logging and degradation", "Support conservation planning", "Quantify ecological impact"],
+        deliverables: ["AI-based satellite/drone analysis models", "Biodiversity monitoring dashboard", "Change detection reports", "Conservation insights"]
+      },
+      {
+        id: "PS-4.8",
+        title: "Sustainable Urban Heat Island Mitigation System",
+        statement: "Urban heat islands increase energy demand and health risks. Develop a system to identify hotspots and evaluate mitigation strategies.",
+        objectives: ["Identify urban heat hotspots", "Predict heatwave impact", "Evaluate mitigation strategies", "Support city-level planning"],
+        deliverables: ["Heat island mapping and prediction model", "Mitigation strategy analysis", "Visualization dashboard", "Policy decision-support report"]
+      },
+      {
+        id: "PS-4.9",
+        title: "AI-Enabled Climate Risk and Disaster Impact Assessment Platform",
+        statement: "Climate-induced disasters cause widespread damage. Develop a platform for risk assessment and rapid impact estimation.",
+        objectives: ["Assess climate risk using multi-source data", "Predict disaster impact severity", "Support disaster preparedness", "Enable rapid damage estimation"],
+        deliverables: ["Climate risk assessment models", "Disaster impact dashboards", "Scenario-based simulations", "Analytical reports"]
+      },
+      {
+        id: "PS-4.10",
+        title: "Circular Economy Optimization Platform for Sustainable Manufacturing",
+        statement: "Manufacturing industries generate waste due to inefficient material usage. Design a platform to optimize material reuse and circular supply chains.",
+        objectives: ["Optimize material reuse and recycling", "Reduce industrial waste and emissions", "Enable circular supply chains", "Support sustainability decision-making"],
+        deliverables: ["Circular economy optimization engine", "Material flow analytics dashboard", "Sustainability impact assessment", "Industry-use-case demonstrations"]
       }
     ]
   },
