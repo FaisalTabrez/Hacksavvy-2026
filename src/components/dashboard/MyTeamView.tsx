@@ -83,7 +83,7 @@ export default function MyTeamView({ team }: MyTeamViewProps) {
           {/* PROJECT INFO (Placeholder if not in DB yet) */}
           <div className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-red-500/30 transition-colors group">
               <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 bg-blue-500/10 rounded-lg text-blue-400 group-hover:scale-110 transition-transform">
+                  <div className="p-3 bg-red-600/10 rounded-lg text-red-600 group-hover:scale-110 transition-transform">
                       <CheckCircle2 className="w-6 h-6" />
                   </div>
                   <h3 className="text-lg font-bold text-white">Project Status</h3>
