@@ -80,6 +80,34 @@ export async function verifyTeamPayment(teamId: string) {
                   <p style="margin: 5px 0;"><strong>Venue:</strong> MGIT, Hyderabad</p>
               </div>
 
+              <div style="margin-top: 20px; border-top: 1px solid #333; padding-top: 20px;">
+                <h3 style="color: #00f0ff;">Join Your Track's WhatsApp Group</h3>
+                <p>Please join the group specific to your registered track for updates:</p>
+                
+                <ul style="list-style: none; padding: 0;">
+                  <li style="margin-bottom: 10px;">
+                    <strong>🤖 AI, Automation & Robotics:</strong><br>
+                    <a href="https://chat.whatsapp.com/BopdwIlZKqH76c2q2EGvLc">Join Group</a>
+                  </li>
+                  <li style="margin-bottom: 10px;">
+                    <strong>🔐 Cybersecurity & Blockchain:</strong><br>
+                    <a href="https://chat.whatsapp.com/BdDt0Sw6RMG2d7SQK13qCz">Join Group</a>
+                  </li>
+                  <li style="margin-bottom: 10px;">
+                    <strong>📡 IoT, VLSI & Embedded:</strong><br>
+                    <a href="https://chat.whatsapp.com/JAQff8TYhUeDxq6xgr8gHT">Join Group</a>
+                  </li>
+                  <li style="margin-bottom: 10px;">
+                    <strong>🌱 Sustainability & Environment:</strong><br>
+                    <a href="https://chat.whatsapp.com/K1aK0nSucjaBPiBB75U3Ik">Join Group</a>
+                  </li>
+                  <li style="margin-bottom: 10px;">
+                    <strong>💡 Open Innovation:</strong><br>
+                    <a href="https://chat.whatsapp.com/FoW9wbUlzuhFmopoUJKm23">Join Group</a>
+                  </li>
+                </ul>
+              </div>
+
               <p>You can now access the <strong>Hacker Kit</strong> on your dashboard.</p>
               
               <a href="https://hacksavvy-2026.vercel.app/dashboard" style="display: inline-block; background-color: #000; color: #00f0ff; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">Go to Dashboard</a>
